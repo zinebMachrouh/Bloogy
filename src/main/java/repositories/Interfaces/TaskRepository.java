@@ -1,4 +1,4 @@
-package repositories;
+package repositories.Interfaces;
 
 public interface TaskRepository {
 

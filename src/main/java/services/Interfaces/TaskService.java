@@ -1,4 +1,4 @@
-package services;
+package services.Interfaces;
 
 public interface TaskService {
 

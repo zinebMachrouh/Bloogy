@@ -1,10 +1,12 @@
-package models;
+package dto;
 
+import models.Article;
 import models.enums.ArticleStatus;
 
 import java.util.Date;
+import java.util.Objects;
 
-public class Articles {
+public class ArticleDTO {
     private int id;
     private String title;
     private String content;
@@ -14,7 +16,10 @@ public class Articles {
     private int categoryId;
     private int authorId;
 
-    public Articles(int id, String title, String content, Date createdAt, Date lunchedAt, ArticleStatus status, int categoryId, int authorId) {
+    public ArticleDTO() {
+    }
+
+    public ArticleDTO(int id, String title, String content, Date createdAt, Date lunchedAt, ArticleStatus status, int categoryId, int authorId) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -88,4 +93,21 @@ public class Articles {
     public void setAuthorId(int authorId) {
         this.authorId = authorId;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ArticleDTO that = (ArticleDTO) o;
+        return id == that.id && categoryId == that.categoryId && authorId == that.authorId && Objects.equals(title, that.title) && Objects.equals(content, that.content) && Objects.equals(createdAt, that.createdAt) && Objects.equals(lunchedAt, that.lunchedAt) && status == that.status;
+    }
+
+    public Article dtoToModel(){
+        return new Article(this.id, this.title, this.content, this.createdAt, this.lunchedAt, this.status, this.categoryId, this.authorId);
+    }
+
+    public static ArticleDTO modelToDTO(Article article){
+        return new ArticleDTO(article.getId(), article.getTitle(), article.getContent(), article.getCreatedAt(), article.getLunchedAt(), article.getStatus(), article.getCategoryId(), article.getAuthorId());
+    }
+
 }

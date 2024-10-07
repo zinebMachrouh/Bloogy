@@ -11,14 +11,18 @@ public class Articles {
     private Date createdAt;
     private Date lunchedAt;
     private ArticleStatus status;
+    private int categoryId;
+    private int authorId;
 
-    public Articles(int id, String title, String content, Date createdAt, Date lunchedAt, ArticleStatus status) {
+    public Articles(int id, String title, String content, Date createdAt, Date lunchedAt, ArticleStatus status, int categoryId, int authorId) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.createdAt = createdAt;
         this.lunchedAt = lunchedAt;
         this.status = status;
+        this.categoryId = categoryId;
+        this.authorId = authorId;
     }
 
     public int getId() {
@@ -69,5 +73,19 @@ public class Articles {
         this.status = status;
     }
 
+    public int getCategoryId() {
+        return categoryId;
+    }
 
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public int getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(int authorId) {
+        this.authorId = authorId;
+    }
 }

@@ -31,18 +31,18 @@ public class CategoryDTO {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CategoryDTO that = (CategoryDTO) o;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        CategoryDTO that = (CategoryDTO) obj;
         return id == that.id && Objects.equals(name, that.name) && Objects.equals(description, that.description);
     }
 
-    public Category dtoToCategory() {
+    public Category dtoToModel() {
         return new Category(id, name, description);
     }
 
-    public static CategoryDTO categoryToDTO(Category category) {
+    public static CategoryDTO modelToDTO(Category category) {
         return new CategoryDTO(category.getId(), category.getName(), category.getDescription());
     }
 }

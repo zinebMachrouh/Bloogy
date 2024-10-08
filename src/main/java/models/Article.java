@@ -2,37 +2,64 @@ package models;
 
 import models.enums.ArticleStatus;
 
+import javax.persistence.*;
 import java.util.Date;
 
+
+@Entity
+@Table(name = "articles")
 public class Article {
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(name = "title", nullable = false)
     private String title;
+
+    @Column(name = "content", nullable = false)
     private String content;
+
+    @Column(name = "created_at", nullable = false)
     private Date createdAt;
+
+    @Column(name = "lunched_at", nullable = false)
     private Date lunchedAt;
+
+    @Column(name = "status", nullable = false)
     private ArticleStatus status;
-    private int categoryId;
-    private int authorId;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+
+
+
 
     public Article() {
     }
 
-    public Article(int id, String title, String content, Date createdAt, Date lunchedAt, ArticleStatus status, int categoryId, int authorId) {
+    public Article(Integer id, String title, String content, Date createdAt, Date lunchedAt, ArticleStatus status, Category category, User user) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.createdAt = createdAt;
         this.lunchedAt = lunchedAt;
         this.status = status;
-        this.categoryId = categoryId;
-        this.authorId = authorId;
+        this.category = category;
+        this.user = user;
+
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -76,19 +103,19 @@ public class Article {
         this.status = status;
     }
 
-    public int getCategoryId() {
-        return categoryId;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
-    public int getAuthorId() {
-        return authorId;
+    public User getUser() {
+        return user;
     }
 
-    public void setAuthorId(int authorId) {
-        this.authorId = authorId;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

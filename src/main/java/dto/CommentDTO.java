@@ -9,7 +9,7 @@ import java.util.Date;
 public class CommentDTO {
     private Integer id;
     private String content;
-    private Date createdDate;
+    private Date creationDate;
     private CommentStatus status;
     private ArticleDTO article;
     private UserDTO user;
@@ -17,10 +17,10 @@ public class CommentDTO {
     public CommentDTO() {
     }
 
-    public CommentDTO(Integer id, String content, Date createdDate, ArticleDTO article, UserDTO user) {
+    public CommentDTO(Integer id, String content, Date creationDate, ArticleDTO article, UserDTO user) {
         this.id = id;
         this.content = content;
-        this.createdDate = createdDate;
+        this.creationDate = creationDate;
         this.status = CommentStatus.APPROVED;
         this.article = article;
         this.user = user;
@@ -41,10 +41,10 @@ public class CommentDTO {
     }
 
     public Date getCreatedDate() {
-        return createdDate;
+        return creationDate;
     }
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
+    public void setCreatedDate(Date creationDate) {
+        this.creationDate = creationDate;
     }
 
     public CommentStatus getStatus() {
@@ -73,7 +73,7 @@ public class CommentDTO {
         return "CommentDTO{" +
                 "id=" + id +
                 ", content='" + content + '\'' +
-                ", createdDate=" + createdDate +
+                ", creationDate=" + creationDate +
                 ", status=" + status +
                 ", article=" + article +
                 '}';
@@ -88,13 +88,13 @@ public class CommentDTO {
 
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (content != null ? !content.equals(that.content) : that.content != null) return false;
-        if (createdDate != null ? !createdDate.equals(that.createdDate) : that.createdDate != null) return false;
+        if (creationDate != null ? !creationDate.equals(that.creationDate) : that.creationDate != null) return false;
         if (status != that.status) return false;
         return article != null ? article.equals(that.article) : that.article == null;
     }
 
     public Comment dtoToModel(){
-        return new Comment(this.id, this.content, this.createdDate, this.status, this.article.dtoToModel(), this.user.dtoToModel());
+        return new Comment(this.id, this.content, this.creationDate, this.status, this.article.dtoToModel(), this.user.dtoToModel());
     }
 
     public static CommentDTO modelToDTO(Comment comment){

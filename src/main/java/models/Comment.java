@@ -29,9 +29,6 @@ public class Comment {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToMany(mappedBy = "comments")
-    private List<Tag> tags;
-
     public Comment() {
     }
 
@@ -86,12 +83,6 @@ public class Comment {
         this.user = user;
     }
 
-    public List<Tag> getTags() {
-        return tags;
-    }
-    public void setTags(List<Tag> tags) {
-        this.tags = tags;
-    }
 
     @Override
     public String toString() {

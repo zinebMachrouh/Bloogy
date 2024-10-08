@@ -3,7 +3,6 @@ package dto;
 import models.Comment;
 import models.enums.CommentStatus;
 
-import java.nio.file.attribute.UserPrincipal;
 import java.util.Date;
 
 public class CommentDTO {
@@ -62,10 +61,10 @@ public class CommentDTO {
     }
 
     public UserDTO getUser() {
-         return user;
+        return user;
     }
     public void setUser(UserDTO user) {
-         this.user = user;
+        this.user = user;
     }
 
     @Override

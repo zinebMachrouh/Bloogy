@@ -10,7 +10,13 @@ import java.util.logging.Logger;
 public class HibernateUtil {
 
     private static final Logger logger = Logger.getLogger(HibernateUtil.class.getName());
-    private static final SessionFactory sessionFactory = buildSessionFactory();
+    private static SessionFactory sessionFactory;
+
+    public static void initialize() {
+        if (sessionFactory == null) {
+            sessionFactory = buildSessionFactory();
+        }
+    }
 
     private static SessionFactory buildSessionFactory() {
         try {
@@ -23,6 +29,9 @@ public class HibernateUtil {
     }
 
     public static SessionFactory getSessionFactory() {
+        if (sessionFactory == null) {
+            initialize();
+        }
         return sessionFactory;
     }
 

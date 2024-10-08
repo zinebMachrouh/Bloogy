@@ -32,18 +32,18 @@ public class Article {
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
-    @ManyToOne
+    /*@ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-
+*/
 
 
 
     public Article() {
     }
 
-    public Article(Integer id, String title, String content, Date createdAt, Date lunchedAt, ArticleStatus status, Category category, User user) {
+    /*public Article(Integer id, String title, String content, Date createdAt, Date lunchedAt, ArticleStatus status, Category category, User user) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -53,6 +53,16 @@ public class Article {
         this.category = category;
         this.user = user;
 
+    }*/
+
+    public Article(Integer id, String title, String content, Date createdAt, Date lunchedAt, ArticleStatus status, Category category) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.createdAt = createdAt;
+        this.lunchedAt = lunchedAt;
+        this.status = status;
+        this.category = category;
     }
 
     public Integer getId() {
@@ -111,11 +121,11 @@ public class Article {
         this.category = category;
     }
 
-    public User getUser() {
+    /*public User getUser() {
         return user;
     }
 
     public void setUser(User user) {
         this.user = user;
-    }
+    }*/
 }

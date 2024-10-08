@@ -37,3 +37,11 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+# Ignore MySQL socket file
+data/mysql.sock
+
+# Ignore MySQL configuration and log files
+data/*.cnf
+data/*.index
+data/*.ib_buffer_pool

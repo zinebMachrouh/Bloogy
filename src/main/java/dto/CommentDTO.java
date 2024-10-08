@@ -80,17 +80,17 @@ public class CommentDTO {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof CommentDTO)) return false;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        CommentDTO that = (CommentDTO) o;
+        CommentDTO comment = (CommentDTO) obj;
 
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (content != null ? !content.equals(that.content) : that.content != null) return false;
-        if (creationDate != null ? !creationDate.equals(that.creationDate) : that.creationDate != null) return false;
-        if (status != that.status) return false;
-        return article != null ? article.equals(that.article) : that.article == null;
+        if (id != null ? !id.equals(comment.id) : comment.id != null) return false;
+        if (content != null ? !content.equals(comment.content) : comment.content != null) return false;
+        if (creationDate != null ? !creationDate.equals(comment.creationDate) : comment.creationDate != null) return false;
+        if (status != comment.status) return false;
+        return article != null ? article.equals(comment.article) : comment.article == null;
     }
 
     public Comment dtoToModel(){

@@ -1,0 +1,12 @@
+version: '3.9'
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysqlBloogy
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: Bloogy
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./data:/var/lib/mysql

@@ -10,7 +10,7 @@ CREATE TABLE users (
                        password VARCHAR(255) NOT NULL,
                        is_active BOOLEAN DEFAULT TRUE NOT NULL,
                        date_joined TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-                       role ENUM('admin', 'user', 'author', 'contributor') NOT NULL
+                       role ENUM('admin', 'editor', 'contributor') NOT NULL
 );
 
 -- 4. Categories

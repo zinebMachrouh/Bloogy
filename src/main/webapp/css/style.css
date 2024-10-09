@@ -1,0 +1,20 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+}
+
+:root {
+    --black: #212429;
+    --dark: #34495E;
+    --main: #0096C7;
+    --white: #FAFAFA;
+    --light-grey: #ECF0F1;
+    --grey: #BDC3C7;
+    --side: #FFC636;
+}
+
+body{
+    background-color: var(--white);
+}

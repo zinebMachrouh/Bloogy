@@ -1,4 +1,4 @@
 package services.Interfaces;
 
-public class ArticleService {
+public interface ArticleService {
 }

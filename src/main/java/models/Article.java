@@ -25,8 +25,10 @@ public class Article {
     @Column(name = "lunched_at", nullable = false)
     private Date lunchedAt;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private ArticleStatus status;
+
 
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)

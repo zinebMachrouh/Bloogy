@@ -10,6 +10,6 @@ public interface ArticleService {
     public Article addArticle(ArticleDTO article) throws SQLException;
     public Article updateArticle(ArticleDTO article) throws SQLException;
     void deleteArticle(int id) throws SQLException;
-    List<Article> getAllArticles() throws SQLException;
+    List<ArticleDTO> getAllArticles() throws SQLException;
     Article getArticleById(int id) throws SQLException;
 }

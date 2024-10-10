@@ -4,6 +4,8 @@ import models.enums.ArticleStatus;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
@@ -29,6 +31,13 @@ public class Article {
     @Column(name = "status", nullable = false)
     private ArticleStatus status;
 
+    @ManyToMany
+    @JoinTable(
+            name = "article_tag",
+            joinColumns = @JoinColumn(name = "article_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    private Set<Tag> tags = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)

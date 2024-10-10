@@ -9,12 +9,14 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 import dao.UserDAO;
+import org.hibernate.SessionFactory;
 import repositories.Interfaces.UserRepository;
 import repositories.UserRepositoryImpl;
 import services.EmailService;
 import services.UserService;
 import dto.UserDTO;
 import models.User;
+import utils.HibernateUtil;
 import utils.PasswordHasher;
 
 
@@ -23,10 +25,11 @@ public class AuthController extends HttpServlet {
 
     public void init() throws ServletException {
         // Create the required dependencies manually
-        UserRepository userRepository = new UserRepositoryImpl(new UserDAO());
-        PasswordHasher passwordHasher = new PasswordHasher();
-        EmailService emailService = new EmailService();
-        userService = new UserService(userRepository, passwordHasher, emailService);
+        SessionFactory sf = HibernateUtil.getSessionFactory();
+//        UserRepository userRepository = new UserRepositoryImpl(new UserDAO());
+//        PasswordHasher passwordHasher = new PasswordHasher();
+//        EmailService emailService = new EmailService();
+//        userService = new UserService(userRepository, passwordHasher, emailService);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -34,6 +37,7 @@ public class AuthController extends HttpServlet {
         try {
             switch (action) {
                 case "/register":
+                    SessionFactory sf = HibernateUtil.getSessionFactory();
                     registerUser(request, response);
                     break;
                 case "/login":

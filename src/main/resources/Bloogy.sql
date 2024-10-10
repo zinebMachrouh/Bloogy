@@ -10,7 +10,12 @@ CREATE TABLE users (
                        password VARCHAR(255) NOT NULL,
                        is_active BOOLEAN DEFAULT TRUE NOT NULL,
                        date_joined TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-                       role ENUM('admin', 'editor', 'contributor') NOT NULL
+                       is_verified BOOLEAN DEFAULT FALSE NOT NULL,
+                       role ENUM('admin', 'editor', 'contributor') NOT NULL,
+                       verification_token VARCHAR(255),
+                       reset_token VARCHAR(255),
+                       reset_token_expiry TIMESTAMP
+
 );
 
 -- 4. Categories

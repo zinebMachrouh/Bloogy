@@ -15,10 +15,12 @@ public class ArticleServiceImpl implements ArticleService {
 
     private ArticleDAO articleDAO;
     private CategoryDAO categoryDAO;
+    private UserDAO userDAO;
 
     public ArticleServiceImpl(ArticleDAO articleDAO) {
         this.articleDAO = articleDAO;
         this.categoryDAO = categoryDAO;
+
 
     }
 

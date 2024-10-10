@@ -15,13 +15,13 @@ public class ArticleDTO {
     private Date lunchedAt;
     private ArticleStatus status;
     private CategoryDTO category;
-    //private UserDTO user;
+    private UserDTO user;
 
 
     public ArticleDTO() {
     }
 
-    /*public ArticleDTO(Integer id, String title, String content, Date createdAt, Date lunchedAt, ArticleStatus status, CategoryDTO category, UserDTO user) {
+    public ArticleDTO(Integer id, String title, String content, Date createdAt, Date lunchedAt, ArticleStatus status, CategoryDTO category, UserDTO user) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -30,7 +30,7 @@ public class ArticleDTO {
         this.status = status;
         this.category = category;
         this.user = user;
-    }*/
+    }
 
     public ArticleDTO(Integer id, String title, String content, Date createdAt, Date lunchedAt, ArticleStatus status, CategoryDTO categoryDTO) {
         this.id = id;
@@ -97,7 +97,7 @@ public class ArticleDTO {
     public void setCategory(CategoryDTO category) {
         this.category = category;
     }
-/*
+
     public UserDTO getUser() {
         return user;
     }
@@ -105,7 +105,7 @@ public class ArticleDTO {
     public void setUser(UserDTO user) {
         this.user = user;
     }
-*/
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;

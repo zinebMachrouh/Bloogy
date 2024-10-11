@@ -21,4 +21,8 @@ public class HibernateUtil {
         System.out.println("creating session factory");
         return sessionFactory;
     }
+
+    public static void shutdown() {
+        getSessionFactory().close();
+    }
 }

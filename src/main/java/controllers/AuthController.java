@@ -3,6 +3,7 @@ package controllers;
 import dao.UsersDAOImpl;
 import dto.UserDTO;
 import models.User;
+import models.enums.UserRole;
 import repositories.UserRepositoryImpl;
 import services.Interfaces.UserService;
 import services.UserServiceImpl;
@@ -80,7 +81,7 @@ public class AuthController extends HttpServlet {
         userDTO.setUsername(request.getParameter("username"));
         userDTO.setEmail(request.getParameter("email"));
         userDTO.setPassword(request.getParameter("password"));
-        userDTO.setRole(request.getParameter("role"));
+        userDTO.setRole(UserRole.valueOf(request.getParameter("role")));
 
         if (userService.register(userDTO)) {
             request.setAttribute("message", "Registration successful. Please check your email to verify your account.");

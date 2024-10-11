@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
         user.setUsername(userDTO.getUsername());
         user.setEmail(userDTO.getEmail());
         user.setPassword(BCrypt.hashpw(userDTO.getPassword(), BCrypt.gensalt()));
-        user.setRole(UserRole.valueOf(userDTO.getRole()));
+        user.setRole(UserRole.valueOf(userDTO.getRole().toString()));
         user.setActive(true);
         user.setVerified(false);
         user.setDateJoined(new Date());

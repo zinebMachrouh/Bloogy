@@ -24,28 +24,20 @@ public class Comment {
     @JoinColumn(name = "article_id", nullable = false)
     private Article article;
 
-    /*@ManyToOne
+    @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;*/
+    private User user;
 
     public Comment() {
     }
 
-    /*public Comment(Integer id, String content, Date creationDate, CommentStatus status, Article article, User user) {
+    public Comment(Integer id, String content, Date creationDate, CommentStatus status, Article article, User user) {
         this.id = id;
         this.content = content;
         this.creationDate = creationDate;
         this.status = status;
         this.article = article;
         this.user = user;
-    }*/
-
-    public Comment(Integer id, String content, Date creationDate, CommentStatus status, Article article) {
-        this.id = id;
-        this.content = content;
-        this.creationDate = creationDate;
-        this.status = status;
-        this.article = article;
     }
 
     public Integer getId() {
@@ -83,14 +75,16 @@ public class Comment {
         this.article = article;
     }
 
-    /*public User getUser() {
+    public User getUser() {
         return user;
     }
     public void setUser(User user) {
         this.user = user;
-    }*/
+    }
 
 
+
+    
     @Override
     public String toString() {
         return "Comment{" +

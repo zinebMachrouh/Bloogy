@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
             userRepository.update(user);
 
             // Send password reset email
-            String resetLink = "http://yourdomain.com/reset-password?token=" + resetToken;
+            String resetLink = "http://localhost/reset-password?token=" + resetToken;
             emailService.sendPasswordResetEmail(user.getEmail(), resetLink);
 
             return true;

@@ -4,6 +4,8 @@ import models.enums.ArticleStatus;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
@@ -29,23 +31,30 @@ public class Article {
     @Column(name = "status", nullable = false)
     private ArticleStatus status;
 
+    @ManyToMany
+    @JoinTable(
+            name = "article_tag",
+            joinColumns = @JoinColumn(name = "article_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    private Set<Tag> tags = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
-    /*@ManyToOne
+    @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-*/
+
 
 
 
     public Article() {
     }
 
-    /*public Article(Integer id, String title, String content, Date createdAt, Date lunchedAt, ArticleStatus status, Category category, User user) {
+    public Article(Integer id, String title, String content, Date createdAt, Date lunchedAt, ArticleStatus status, Category category, User user) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -55,7 +64,7 @@ public class Article {
         this.category = category;
         this.user = user;
 
-    }*/
+    }
 
     public Article(Integer id, String title, String content, Date createdAt, Date lunchedAt, ArticleStatus status, Category category) {
         this.id = id;
@@ -123,11 +132,11 @@ public class Article {
         this.category = category;
     }
 
-    /*public User getUser() {
+    public User getUser() {
         return user;
     }
 
     public void setUser(User user) {
         this.user = user;
-    }*/
+    }
 }

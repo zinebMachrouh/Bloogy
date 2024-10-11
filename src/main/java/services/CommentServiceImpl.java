@@ -4,6 +4,7 @@ import dao.Interfaces.ArticleDAO;
 import dao.Interfaces.CommentDAO;
 import dto.CommentDTO;
 import models.Comment;
+import models.enums.CommentStatus;
 import services.Interfaces.CommentService;
 
 import java.sql.SQLException;
@@ -25,9 +26,14 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Comment updateComment(CommentDTO comment) throws SQLException {
-        Comment commentModel = comment.dtoToModel();
-        return commentDAO.updateComment(commentModel);
+    public Comment updateComment(CommentDTO commentDTO) throws SQLException {
+        Comment comment = commentDAO.getCommentById(commentDTO.getId()); // Retrieve the comment first
+        if (comment != null) {
+            comment.setContent(commentDTO.getContent());
+            comment.setStatus(CommentStatus.APPROVED);  // Example: Update status or other fields
+            return commentDAO.updateComment(comment);  // Then update the comment
+        }
+        throw new SQLException("Comment not found");
     }
 
     @Override
@@ -39,11 +45,11 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Comment getCommentById(int id) throws SQLException {
-        if (commentDAO.getCommentById(id) != null){
-            return commentDAO.getCommentById(id);
-        }else{
-            return null;
+        Comment comment = commentDAO.getCommentById(id);
+        if (comment == null) {
+            throw new SQLException("Comment not found");
         }
+        return comment;
     }
 
     @Override

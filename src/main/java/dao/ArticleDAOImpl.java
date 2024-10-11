@@ -1,5 +1,6 @@
 package dao;
 
+import dao.Interfaces.ArticleDAO;
 import models.Article;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -9,7 +10,7 @@ import org.hibernate.query.Query;
 import java.sql.SQLException;
 import java.util.List;
 
-public class ArticleDAOImpl {
+public class ArticleDAOImpl implements ArticleDAO {
     private final SessionFactory sessionFactory;
 
     public ArticleDAOImpl(SessionFactory sessionFactory) {

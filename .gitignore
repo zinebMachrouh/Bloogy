@@ -13,6 +13,11 @@ data/mysql.sock
 *.iml
 *.ipr
 
+# Ignore MySQL temporary files
+data/#innodb_temp/
+data/ibtmp1
+
+
 ### Eclipse ###
 .apt_generated
 .classpath

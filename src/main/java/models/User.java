@@ -28,12 +28,12 @@ public class User {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateJoined;
 
+    @Column(name = "is_verified", nullable = false)
+    private boolean isVerified;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private UserRole role;
-
-    @Column(name = "is_verified", nullable = false)
-    private boolean isVerified;
 
     @Column(name = "verification_token")
     private String verificationToken;
@@ -44,7 +44,6 @@ public class User {
     @Column(name = "reset_token_expiry")
     @Temporal(TemporalType.TIMESTAMP)
     private Date resetTokenExpiry;
-
     // Getters and setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }

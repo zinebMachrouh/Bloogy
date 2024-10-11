@@ -1,13 +1,10 @@
 package repositories;
 
-import dao.UserDAO;
+import dao.Interfaces.UserDAO;
 import models.User;
 import repositories.Interfaces.UserRepository;
 
-import java.util.Optional;
-
 public class UserRepositoryImpl implements UserRepository {
-
     private final UserDAO userDAO;
 
     public UserRepositoryImpl(UserDAO userDAO) {
@@ -15,37 +12,37 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Optional<User> findByUsername(String username) {
-        User user = userDAO.findByUsername(username);
-        return Optional.ofNullable(user);
+    public User findById(int id) {
+        return userDAO.findById(id);
     }
 
     @Override
-    public Optional<User> findByEmail(String email) {
-        User user = userDAO.findByEmail(email);
-        return Optional.ofNullable(user);
+    public User findByUsername(String username) {
+        return userDAO.findByUsername(username);
     }
 
     @Override
-    public Optional<User> findByVerificationToken(String token) {
-        User user = userDAO.findByVerificationToken(token);
-        return Optional.ofNullable(user);
+    public User findByEmail(String email) {
+        return userDAO.findByEmail(email);
     }
 
     @Override
-    public Optional<User> findByResetToken(String token) {
-        User user = userDAO.findByResetToken(token);
-        return Optional.ofNullable(user);
-    }
-
-    @Override
-    public User save(User user) {
-        userDAO.create(user);
-        return user;
+    public void save(User user) {
+        userDAO.save(user);
     }
 
     @Override
     public void update(User user) {
         userDAO.update(user);
+    }
+
+    @Override
+    public boolean verifyUser(String token) {
+        return userDAO.verifyUser(token);
+    }
+
+    @Override
+    public boolean resetPassword(String token, String newPassword) {
+        return userDAO.resetPassword(token, newPassword);
     }
 }

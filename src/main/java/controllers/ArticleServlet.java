@@ -2,6 +2,7 @@ package controllers;
 
 import dao.ArticleDAOImpl;
 import dao.CategoryDAOImpl;
+import dao.Interfaces.UserDAO;
 import dto.ArticleDTO;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -11,7 +12,7 @@ import services.Interfaces.ArticleService;
 import services.ArticleServiceImpl;
 import dao.Interfaces.ArticleDAO;
 import dao.Interfaces.CategoryDAO;
-import dao.UserDAO;
+import dao.UsersDAOImpl;
 import dto.ArticleDTO;
 
 import javax.servlet.ServletException;
@@ -35,7 +36,7 @@ public class ArticleServlet extends HttpServlet {
 
         ArticleDAO articleDAO = new ArticleDAOImpl(sessionFactory);
         CategoryDAO categoryDAO = new CategoryDAOImpl(sessionFactory);
-        UserDAO userDAO = new UserDAO();
+        UserDAO userDAO = new UsersDAOImpl(sessionFactory);
 
         articleService = new ArticleServiceImpl(articleDAO, categoryDAO, userDAO);
     }

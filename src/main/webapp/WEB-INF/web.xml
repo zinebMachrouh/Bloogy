@@ -60,6 +60,17 @@
         <url-pattern>/article/main</url-pattern>
     </servlet-mapping>
 
+    <!-- Article page -->
+    <servlet>
+        <servlet-name>ArticlePageServlet</servlet-name>
+        <jsp-file>/WEB-INF/jsp/article/article_page.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ArticlePageServlet</servlet-name>
+        <url-pattern>/article/page</url-pattern>
+    </servlet-mapping>
+
+
 
 
     <!-- Reset Password Request page -->

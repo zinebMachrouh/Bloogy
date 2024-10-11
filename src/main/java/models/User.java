@@ -11,7 +11,7 @@ public class User {
 
     public User() {
     }
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -50,6 +50,17 @@ public class User {
     private Date resetTokenExpiry;
 
     public User(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.isActive = true;
+        this.dateJoined = new Date();
+        this.role = UserRole.CONTRIBUTOR;
+        this.isVerified = false;
+    }
+
+    public User(int id, String username, String email, String password) {
+        this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;

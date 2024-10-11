@@ -1,15 +1,18 @@
+package services;
+
 import dao.Interfaces.ArticleDAO;
 import dto.ArticleDTO;
 import dto.CategoryDTO;
+import dto.UserDTO;
 import models.Article;
 import models.Category;
+import models.User;
 import models.enums.ArticleStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import services.ArticleServiceImpl;
 
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -35,7 +38,7 @@ class ArticleServiceImplTest {
     @Test
     void testAddArticle() throws SQLException {
         // Arrange
-        ArticleDTO articleDTO = new ArticleDTO(1, "Article Title", "Article Content", new Date(), new Date(), ArticleStatus.PUBLISHED, new CategoryDTO(1, "Category 1", "Description 1"));
+        ArticleDTO articleDTO = new ArticleDTO(1, "Article Title", "Article Content", new Date(), new Date(), ArticleStatus.PUBLISHED, new CategoryDTO(1, "Category 1", "Description 1"), new UserDTO("user 01", "user@gmail.com", "1234"));
         Article article = new Article(1, "Article Title", "Article Content", new Date(), new Date(), ArticleStatus.PUBLISHED, new Category(1, "Category 1", "Description 1"));
 
         when(articleDAO.addArticle(any(Article.class))).thenReturn(article);
@@ -53,7 +56,7 @@ class ArticleServiceImplTest {
     @Test
     void testUpdateArticle() throws SQLException {
         // Arrange
-        ArticleDTO articleDTO = new ArticleDTO(1, "Updated Title", "Updated Content", new Date(), new Date(), ArticleStatus.PUBLISHED, new CategoryDTO(1, "Category 1", "Description 1"));
+        ArticleDTO articleDTO = new ArticleDTO(1, "Updated Title", "Updated Content", new Date(), new Date(), ArticleStatus.PUBLISHED, new CategoryDTO(1, "Category 1", "Description 1"), new UserDTO("user 01", "user@gmail.com", "1234"));
         Article article = new Article(1, "Updated Title", "Updated Content", new Date(), new Date(), ArticleStatus.PUBLISHED, new Category(1, "Category 1", "Description 1"));
 
         when(articleDAO.getArticleById(1)).thenReturn(article);
@@ -72,7 +75,7 @@ class ArticleServiceImplTest {
     @Test
     void testUpdateArticleNotFound() throws SQLException {
         // Arrange
-        ArticleDTO articleDTO = new ArticleDTO(1, "Updated Title", "Updated Content", new Date(), new Date(), ArticleStatus.PUBLISHED, new CategoryDTO(1, "Category 1", "Description 1"));
+        ArticleDTO articleDTO = new ArticleDTO(1, "Updated Title", "Updated Content", new Date(), new Date(), ArticleStatus.PUBLISHED, new CategoryDTO(1, "Category 1", "Description 1"), new UserDTO("user 01", "user@gmail.com", "1234"));
 
         when(articleDAO.getArticleById(1)).thenReturn(null);
 
@@ -111,8 +114,8 @@ class ArticleServiceImplTest {
     @Test
     void testGetAllArticles() throws SQLException {
         // Arrange
-        Article article1 = new Article(1, "Article 1", "Content 1", new Date(), new Date(), ArticleStatus.PUBLISHED, new Category(1, "Category 1", "Description 1"));
-        Article article2 = new Article(2, "Article 2", "Content 2", new Date(), new Date(), ArticleStatus.PUBLISHED, new Category(2, "Category 2", "Description 2"));
+        Article article1 = new Article(1, "Article 1", "Content 1", new Date(), new Date(), ArticleStatus.PUBLISHED, new Category(1, "Category 1", "Description 1"), new User("user 01", "user@gmail.com", "1234"));
+        Article article2 = new Article(2, "Article 2", "Content 2", new Date(), new Date(), ArticleStatus.PUBLISHED, new Category(2, "Category 2", "Description 2"),  new User("user 02", "user2@gmail.com", "1234") );
         List<Article> articleList = Arrays.asList(article1, article2);
 
         when(articleDAO.getAllArticles()).thenReturn(articleList);

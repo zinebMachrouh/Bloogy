@@ -94,7 +94,13 @@ public class CommentDTO {
     }
 
     public Comment dtoToModel(){
-        return new Comment(this.id, this.content, this.creationDate, this.status, this.article.dtoToModel(), this.user.dtoToModel());
+        return new Comment(
+                this.id,
+                this.content,
+                this.creationDate,
+                this.status,
+                this.article.dtoToModel(),
+                this.user.dtoToModel());
     }
 
     public static CommentDTO modelToDTO(Comment comment){

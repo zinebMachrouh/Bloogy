@@ -1,3 +1,5 @@
+package services;
+
 import dao.Interfaces.CategoryDAO;
 import dto.CategoryDTO;
 import models.Category;
@@ -6,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import services.CategoryServiceImpl;
 
 import java.sql.SQLException;
 import java.util.Arrays;

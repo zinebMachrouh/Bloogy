@@ -2,6 +2,7 @@ package services;
 
 import dao.Interfaces.ArticleDAO;
 import dao.Interfaces.CategoryDAO;
+import dao.UserDAO;
 import dto.ArticleDTO;
 import models.Article;
 import models.Category;
@@ -15,10 +16,12 @@ public class ArticleServiceImpl implements ArticleService {
 
     private ArticleDAO articleDAO;
     private CategoryDAO categoryDAO;
+    private UserDAO userDAO;
 
     public ArticleServiceImpl(ArticleDAO articleDAO) {
         this.articleDAO = articleDAO;
         this.categoryDAO = categoryDAO;
+
 
     }
 

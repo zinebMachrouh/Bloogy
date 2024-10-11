@@ -50,6 +50,18 @@
         <url-pattern>/auth/reset-password</url-pattern>
     </servlet-mapping>
 
+    <!-- Article Main page -->
+    <servlet>
+        <servlet-name>ArticleMainServlet</servlet-name>
+        <jsp-file>/WEB-INF/jsp/article/article_main.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ArticleMainServlet</servlet-name>
+        <url-pattern>/article/main</url-pattern>
+    </servlet-mapping>
+
+
+
     <!-- Reset Password Request page -->
     <servlet>
         <servlet-name>ResetPasswordRequestServlet</servlet-name>

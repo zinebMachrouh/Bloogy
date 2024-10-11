@@ -18,11 +18,11 @@ public class ArticleServiceImpl implements ArticleService {
     private CategoryDAO categoryDAO;
     private UserDAO userDAO;
 
-    public ArticleServiceImpl(ArticleDAO articleDAO) {
+    // Constructor accepting all DAOs
+    public ArticleServiceImpl(ArticleDAO articleDAO, CategoryDAO categoryDAO, UserDAO userDAO) {
         this.articleDAO = articleDAO;
         this.categoryDAO = categoryDAO;
-
-
+        this.userDAO = userDAO; // Initialize userDAO
     }
 
 

@@ -11,27 +11,20 @@ public class CommentDTO {
     private Date creationDate;
     private CommentStatus status;
     private ArticleDTO article;
-    //private UserDTO user;
+    private UserDTO user;
 
     public CommentDTO() {
     }
 
-    /*public CommentDTO(Integer id, String content, Date creationDate, ArticleDTO article, UserDTO user) {
+    public CommentDTO(Integer id, String content, Date creationDate, ArticleDTO article, UserDTO user) {
         this.id = id;
         this.content = content;
         this.creationDate = creationDate;
         this.status = CommentStatus.APPROVED;
         this.article = article;
         this.user = user;
-    }*/
-
-    public CommentDTO(Integer id, String content, Date creationDate, CommentStatus status, ArticleDTO article) {
-        this.id = id;
-        this.content = content;
-        this.creationDate = creationDate;
-        this.status = status;
-        this.article = article;
     }
+
 
     public Integer getId() {
         return id;
@@ -68,12 +61,12 @@ public class CommentDTO {
         this.article = article;
     }
 
-    /*public UserDTO getUser() {
+    public UserDTO getUser() {
         return user;
     }
     public void setUser(UserDTO user) {
         this.user = user;
-    }*/
+    }
 
     @Override
     public String toString() {
@@ -101,12 +94,10 @@ public class CommentDTO {
     }
 
     public Comment dtoToModel(){
-        //return new Comment(this.id, this.content, this.creationDate, this.status, this.article.dtoToModel(), this.user.dtoToModel());
-        return new Comment(this.id, this.content, this.creationDate, this.status, this.article.dtoToModel());
+        return new Comment(this.id, this.content, this.creationDate, this.status, this.article.dtoToModel(), this.user.dtoToModel());
     }
 
     public static CommentDTO modelToDTO(Comment comment){
-        //return new CommentDTO(comment.getId(), comment.getContent(), comment.getCreationDate(), ArticleDTO.modelToDTO(comment.getArticle()), UserDTO.modelToDTO(comment.getUser()));
-        return new CommentDTO(comment.getId(), comment.getContent(), comment.getCreationDate(), comment.getStatus(), ArticleDTO.modelToDTO(comment.getArticle()));
+        return new CommentDTO(comment.getId(), comment.getContent(), comment.getCreationDate(), ArticleDTO.modelToDTO(comment.getArticle()), UserDTO.modelToDTO(comment.getUser()));
     }
 }

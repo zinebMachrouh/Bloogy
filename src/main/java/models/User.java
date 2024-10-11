@@ -8,6 +8,10 @@ import java.util.Date;
 @Entity
 @Table(name = "users")
 public class User {
+
+    public User() {
+    }
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -44,6 +48,16 @@ public class User {
     @Column(name = "reset_token_expiry")
     @Temporal(TemporalType.TIMESTAMP)
     private Date resetTokenExpiry;
+
+    public User(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.isActive = true;
+        this.dateJoined = new Date();
+        this.role = UserRole.CONTRIBUTOR;
+        this.isVerified = false;
+    }
 
     // Getters and setters
     public int getId() { return id; }

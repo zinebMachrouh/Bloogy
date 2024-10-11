@@ -20,7 +20,7 @@
         <url-pattern>/auth/*</url-pattern>
     </servlet-mapping>
 
-    <!-- Login page -->
+
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <jsp-file>/WEB-INF/jsp/auth/login.jsp</jsp-file>

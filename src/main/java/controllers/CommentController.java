@@ -14,7 +14,7 @@ import services.ArticleServiceImpl;
 import services.CommentServiceImpl;
 import services.Interfaces.ArticleService;
 import services.Interfaces.CommentService;
-import services.UserService;
+import services.UserServiceImpl;
 import utils.HibernateUtil;
 
 import javax.servlet.*;
@@ -31,7 +31,7 @@ public class CommentController extends HttpServlet {
 
     private CommentService commentService;
     private ArticleService articleService;
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @Override
     public void init() {

@@ -2,7 +2,7 @@ package services;
 
 import dao.Interfaces.ArticleDAO;
 import dao.Interfaces.CategoryDAO;
-import dao.UserDAO;
+import dao.Interfaces.UserDAO;
 import dto.ArticleDTO;
 import models.Article;
 import models.Category;

@@ -22,8 +22,6 @@
         <mapping class="models.User"/>
         <mapping class="models.Comment"/>
         <mapping class="models.Tag"/>
-        <mapping class="models.Author"/>
-        <mapping class="models.Admin"/>
         <mapping class="models.Category"/>
 
     </session-factory>

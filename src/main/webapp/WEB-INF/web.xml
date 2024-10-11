@@ -5,6 +5,10 @@
          version="4.0">
 
     <display-name>Bloogy</display-name>
+    <context-param>
+        <param-name>javax.faces.CONFIG_FILES</param-name>
+        <param-value>/hibernate-test.cfg.xml</param-value>
+    </context-param>
 
     <servlet>
         <servlet-name>AuthController</servlet-name>
@@ -51,9 +55,18 @@
         <servlet-name>ResetPasswordRequestServlet</servlet-name>
         <jsp-file>/WEB-INF/jsp/auth/reset-password-request.jsp</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ResetPasswordRequestServlet</servlet-name>
         <url-pattern>/auth/reset-password-request</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
 
     <welcome-file-list>

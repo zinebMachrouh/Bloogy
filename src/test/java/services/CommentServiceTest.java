@@ -46,7 +46,7 @@ class CommentServiceTest {
         ArticleDTO articleDTO = new ArticleDTO(1, "Article Title", "Article Content", new Date(), new Date(), ArticleStatus.PUBLISHED, new CategoryDTO(1, "Category 1", "Description 1"), new UserDTO(1,"user 01", "user@gmail.com", "1234"));
         Article article = new Article(1, "Article Title", "Article Content", new Date(), new Date(), ArticleStatus.PUBLISHED, new Category(1, "Category 1", "Description 1"));
         CommentDTO commentDTO = new CommentDTO(1, "Sample Comment", new Date(), articleDTO, new UserDTO(2,"user 02", "user02@gmail.com", "1234"));
-        Comment comment = new Comment(1, "Sample Comment", new Date(), CommentStatus.APPROVED, article, new User(3,"user 01", "User3@gmail.com", "1234"));
+        Comment comment = new Comment(1, "Sample Comment", new Date(), CommentStatus.approved, article, new User(3,"user 01", "User3@gmail.com", "1234"));
 
         when(commentDAO.addComment(any(Comment.class))).thenReturn(comment);
 
@@ -63,7 +63,7 @@ class CommentServiceTest {
         ArticleDTO articleDTO = new ArticleDTO(1, "Article Title", "Article Content", new Date(), new Date(), ArticleStatus.PUBLISHED, new CategoryDTO(1, "Category 1", "Description 1"), new UserDTO(2,"user 01", "use2r@gmail.com", "1234"));
         UserDTO user = new UserDTO(4,"user 01", "user01@gmail.com", "1234");
         CommentDTO commentDTO = new CommentDTO(1, "Updated Comment", new Date(), articleDTO, user );
-        Comment comment = new Comment(1, "Updated Comment", new Date(), CommentStatus.APPROVED, article, new User(3,"user 01", "User@gmail.com", "1234"));
+        Comment comment = new Comment(1, "Updated Comment", new Date(), CommentStatus.approved, article, new User(3,"user 01", "User@gmail.com", "1234"));
 
         when(commentDAO.getCommentById(1)).thenReturn(comment);
         when(commentDAO.updateComment(any(Comment.class))).thenReturn(comment);
@@ -78,7 +78,7 @@ class CommentServiceTest {
 
     @Test
     void testDeleteComment() throws SQLException {
-        Comment comment = new Comment(1, "Sample Comment", new Date(), CommentStatus.APPROVED, new Article(1, "Article Title", "Content", new Date(), new Date(), ArticleStatus.PUBLISHED, new Category(1, "Category 1", "Description 1")), new User("user 01", "User@gmail.com", "1234"));
+        Comment comment = new Comment(1, "Sample Comment", new Date(), CommentStatus.approved, new Article(1, "Article Title", "Content", new Date(), new Date(), ArticleStatus.PUBLISHED, new Category(1, "Category 1", "Description 1")), new User("user 01", "User@gmail.com", "1234"));
 
         when(commentDAO.getCommentById(1)).thenReturn(comment);
 
@@ -90,7 +90,7 @@ class CommentServiceTest {
 
     @Test
     void testGetCommentById() throws SQLException {
-        Comment comment = new Comment(1, "Sample Comment", new Date(), CommentStatus.APPROVED, new Article(1, "Article Title", "Content", new Date(), new Date(), ArticleStatus.PUBLISHED, new Category(1, "Category 1", "Description 1")), new User("user 01", "User@gmail.com", "1234"));
+        Comment comment = new Comment(1, "Sample Comment", new Date(), CommentStatus.approved, new Article(1, "Article Title", "Content", new Date(), new Date(), ArticleStatus.PUBLISHED, new Category(1, "Category 1", "Description 1")), new User("user 01", "User@gmail.com", "1234"));
 
 
         when(commentDAO.getCommentById(1)).thenReturn(comment);
@@ -106,8 +106,8 @@ class CommentServiceTest {
 
     @Test
     void testGetAllComments() throws SQLException {
-        Comment comment1 = new Comment(1, "Comment 1", new Date(), CommentStatus.APPROVED, new Article(1, "Article Title", "Content", new Date(), new Date(), ArticleStatus.PUBLISHED, new Category(1, "Category 1", "Description 1")), new User("user 01", "User@gmail.com", "1234"));
-        Comment comment2 = new Comment(2, "Comment 2", new Date(), CommentStatus.APPROVED, new Article(1, "Article Title", "Content", new Date(), new Date(), ArticleStatus.PUBLISHED, new Category(1, "Category 1", "Description 1")), new User("user 02", "User@gmail.com", "1234"));
+        Comment comment1 = new Comment(1, "Comment 1", new Date(), CommentStatus.approved, new Article(1, "Article Title", "Content", new Date(), new Date(), ArticleStatus.PUBLISHED, new Category(1, "Category 1", "Description 1")), new User("user 01", "User@gmail.com", "1234"));
+        Comment comment2 = new Comment(2, "Comment 2", new Date(), CommentStatus.approved, new Article(1, "Article Title", "Content", new Date(), new Date(), ArticleStatus.PUBLISHED, new Category(1, "Category 1", "Description 1")), new User("user 02", "User@gmail.com", "1234"));
         List<Comment> commentList = Arrays.asList(comment1, comment2);
 
         when(articleDAO.getArticleById(1)).thenReturn(new Article());

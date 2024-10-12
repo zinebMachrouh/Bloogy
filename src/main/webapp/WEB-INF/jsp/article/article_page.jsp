@@ -1,4 +1,7 @@
-<%@ page import="dto.ArticleDTO" %><%--
+<%@ page import="dto.ArticleDTO" %>
+<%@ page import="dto.CommentDTO" %>
+<%@ page import="java.util.List" %>
+<%@ page import="models.Comment" %><%--
   Created by IntelliJ IDEA.
   User: rayane
   Date: 10/11/2024
@@ -18,7 +21,54 @@
         .comments{
             .comment{
                 padding: 10px 0;
+                .top{
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                }
             }
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropbtn {
+            background-color: #fff;
+            border: none;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+            min-width: 160px;
+            z-index: 1;
+            right: 0;
+        }
+
+        .dropdown-content .dropdown-option {
+            background-color: #fff;
+            color: black;
+            padding: 12px 16px;
+            text-align: left;
+            text-decoration: none;
+            display: block;
+            width: 100%;
+            border: none;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .dropdown-content .dropdown-option:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
         }
     </style>
 </head>
@@ -68,65 +118,65 @@
             <div class="px-4 py-2 rounded h-full" style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; background-color: #fff">
                 <h3 class="text-lg font-bold mb-2" style="color: #0096C7; font-size: 26px;height: 5%">Comments</h3>
                 <div class="comments" style="height: 85%; overflow: auto;">
+                    <%-- Retrieve the comments from the request --%>
+                    <%
+                        List<CommentDTO> comments = (List<CommentDTO>) request.getAttribute("comments");
+
+                        if (comments != null && !comments.isEmpty()) {
+                            for (CommentDTO comment : comments) {
+                    %>
+
                     <div class="comment">
-                        <div class="flex align-center" style="gap: 5px;">
-                            <p class="font-semibold">John Doe</p>
-                            <p class="text-gray-500">12/12/2021</p>
+                        <div class="top">
+                            <div class="flex align-center" style="gap: 5px;">
+                                <p class="font-semibold">
+                                    <%= comment.getUser().getUsername() %>
+                                </p>
+                                <%
+                                    java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyy-MM-dd");
+                                    String formattedDate = formatter.format(comment.getCreatedDate());
+                                    assert article != null;%>
+                                <p class="text-gray-500">
+                                    <%= formattedDate %>
+                                </p>
+                            </div>
+                            <div class="dropdown">
+                                <button class="dropbtn" style="background-color: #fff; border: none; outline: none; color: #BDC3C7">
+                                    <i class="fa-solid fa-ellipsis"></i>
+                                </button>
+                                <div class="dropdown-content">
+                                    <form method="post" action="CommentController?action=delete" style="margin: 0px">
+                                        <input type="hidden" name="commentId" value="<%= comment.getId() %>"/>
+                                        <input type="hidden" name="articleId" value="<%= article.getId() %>"/>
+                                        <button type="submit" class="dropdown-option">Delete</button>
+                                    </form>
+                                    <form method="post" action="CommentController?action=updateStatus" style="margin: 0px">
+                                        <input type="hidden" name="commentId" value="<%= comment.getId() %>"/>
+                                        <input type="hidden" name="articleId" value="<%= article.getId() %>"/>
+                                        <button type="submit" class="dropdown-option">Reject</button>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
-                        <p class="text-gray-700">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec purus feugiat,kfjdfhfduk</p>
-                    </div><div class="comment">
-                        <div class="flex align-center" style="gap: 5px;">
-                            <p class="font-semibold">John Doe</p>
-                            <p class="text-gray-500">12/12/2021</p>
-                        </div>
-                        <p class="text-gray-700">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec purus feugiat,kfjdfhfduk</p>
-                    </div><div class="comment">
-                        <div class="flex align-center" style="gap: 5px;">
-                            <p class="font-semibold">John Doe</p>
-                            <p class="text-gray-500">12/12/2021</p>
-                        </div>
-                        <p class="text-gray-700">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec purus feugiat,kfjdfhfduk</p>
-                    </div><div class="comment">
-                        <div class="flex align-center" style="gap: 5px;">
-                            <p class="font-semibold">John Doe</p>
-                            <p class="text-gray-500">12/12/2021</p>
-                        </div>
-                        <p class="text-gray-700">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec purus feugiat,kfjdfhfduk</p>
-                    </div><div class="comment">
-                        <div class="flex align-center" style="gap: 5px;">
-                            <p class="font-semibold">John Doe</p>
-                            <p class="text-gray-500">12/12/2021</p>
-                        </div>
-                        <p class="text-gray-700">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec purus feugiat,kfjdfhfduk</p>
-                    </div><div class="comment">
-                        <div class="flex align-center" style="gap: 5px;">
-                            <p class="font-semibold">John Doe</p>
-                            <p class="text-gray-500">12/12/2021</p>
-                        </div>
-                        <p class="text-gray-700">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec purus feugiat,kfjdfhfduk</p>
-                    </div><div class="comment">
-                        <div class="flex align-center" style="gap: 5px;">
-                            <p class="font-semibold">John Doe</p>
-                            <p class="text-gray-500">12/12/2021</p>
-                        </div>
-                        <p class="text-gray-700">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec purus feugiat,kfjdfhfduk</p>
-                    </div><div class="comment">
-                        <div class="flex align-center" style="gap: 5px;">
-                            <p class="font-semibold">John Doe</p>
-                            <p class="text-gray-500">12/12/2021</p>
-                        </div>
-                        <p class="text-gray-700">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec purus feugiat,kfjdfhfduk</p>
-                    </div><div class="comment">
-                        <div class="flex align-center" style="gap: 5px;">
-                            <p class="font-semibold">John Doe</p>
-                            <p class="text-gray-500">12/12/2021</p>
-                        </div>
-                        <p class="text-gray-700">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec purus feugiat,kfjdfhfduk</p>
+                        <form method="post"  action="CommentController?action=updateContent" class="text-gray-700" style="height: fit-content">
+                            <input type="hidden" name="commentId" value="<%= comment.getId() %>"/>
+                            <input type="hidden" name="articleId" value="<%= article.getId() %>"/>
+                            <input type="text" name="content_updated" id="content_updated" value="<%= comment.getContent() %>" class="h-full" style="border: none; outline: none"/>
+                        </form>
                     </div>
+                    <%
+                            }
+                        } else {
+                    %>
+                    <p style="color: #34495E">No comments found.</p>
+                    <%
+                        }
+                        assert article != null;%>
                 </div>
                 <div style="height: 7.5%;" class="flex flex-col justify-center align-center">
-                    <form method="post" class="my-auto" style="background-color: #FFC636; height: 90%; background-color: #fff; border-top: solid #e0dfdf 1px;">
-                        <input type="text" name="comment" id="comment" placeholder="Share your thoughts <3" class="h-full" style="width: 90%; padding: 0 10px; border: none; outline: none">
+                    <form method="post"  action="CommentController?action=create" class="my-auto" style="height: 90%; background-color: #fff; border-top: solid #e0dfdf 1px;">
+                        <input type="hidden" name="articleId" value="<%= article.getId() %>">
+                        <input type="text" name="content" id="content" placeholder="Share your thoughts <3" class="h-full" style="width: 90%; padding: 0 10px; border: none; outline: none">
                         <button type="submit" class="" style="color: #BDC3C7"><i class="fa-regular fa-paper-plane" style="width: 10%; margin: auto"></i></button>
                     </form>
                 </div>

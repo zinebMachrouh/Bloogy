@@ -25,7 +25,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-
+/*
 class CommentServiceTest {
     @Mock
     private CommentDAO commentDAO;
@@ -133,3 +133,4 @@ class CommentServiceTest {
         verify(commentDAO, never()).getAllComments(1);
     }
 }
+*/

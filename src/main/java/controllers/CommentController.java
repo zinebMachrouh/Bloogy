@@ -11,6 +11,7 @@ import dao.UsersDAOImpl;
 import dto.ArticleDTO;
 import dto.CommentDTO;
 import dto.UserDTO;
+import models.Comment;
 import models.enums.CommentStatus;
 import org.hibernate.SessionFactory;
 import services.ArticleServiceImpl;
@@ -25,8 +26,9 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.Date;
-
+import java.util.List;
 
 @WebServlet(name = "CommentController", value = "/CommentController")
 public class CommentController extends HttpServlet {
@@ -45,6 +47,11 @@ public class CommentController extends HttpServlet {
 
         commentService = new CommentServiceImpl(commentDAO, articleDAO);
         articleService = new ArticleServiceImpl(articleDAO, categoryDAO, userDAO);
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
     }
 
     @Override
@@ -67,48 +74,45 @@ public class CommentController extends HttpServlet {
                     updateCommentStatus(request, response);
                     break;
                 default:
-                    response.sendRedirect("error.jsp");
                     break;
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            response.sendRedirect("error.jsp");
         }
     }
 
-    private void createComment(HttpServletRequest request, HttpServletResponse response, UserDTO authUser) throws SQLException, IOException {
+    private void createComment(HttpServletRequest request, HttpServletResponse response, UserDTO authUser) throws SQLException, IOException, ServletException {
         int articleId = Integer.parseInt(request.getParameter("articleId"));
         String content = request.getParameter("content");
 
-        if (authUser == null) {
-            response.sendRedirect("login.jsp");
-            return;
-        }
-
         ArticleDTO article = ArticleDTO.modelToDTO(articleService.getArticleById(articleId));
+        UserDAO userDAO = new UsersDAOImpl(HibernateUtil.getSessionFactory());
+        UserDTO user = UserDTO.modelToDTO(userDAO.findById(3));
 
-        CommentDTO commentDTO = new CommentDTO();
-        commentDTO.setContent(content);
-        commentDTO.setCreatedDate(new Date());
-        commentDTO.setStatus(CommentStatus.APPROVED);
-        commentDTO.setArticle(article);
-        commentDTO.setUser(authUser);
+        CommentDTO commentDTO = new CommentDTO(
+                0,
+                content,
+                new Date(),
+                article,
+                user
+        );
+
 
         commentService.addComment(commentDTO);
 
-        response.sendRedirect("article.jsp?id=" + articleId);
+        forwardToArticlePage(request, response, articleId);
     }
 
-    private void deleteComment(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+    private void deleteComment(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
         int commentId = Integer.parseInt(request.getParameter("commentId"));
+        int articleId = Integer.parseInt(request.getParameter("articleId"));
 
         commentService.deleteComment(commentId);
 
-        String articleId = request.getParameter("articleId");
-        response.sendRedirect("article.jsp?id=" + articleId);
+        forwardToArticlePage(request, response, articleId);
     }
 
-    private void updateCommentContent(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+    private void updateCommentContent(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
         int commentId = Integer.parseInt(request.getParameter("commentId"));
         String newContent = request.getParameter("content");
 
@@ -116,25 +120,29 @@ public class CommentController extends HttpServlet {
         commentDTO.setContent(newContent);
         commentService.updateComment(commentDTO);
 
-        String articleId = request.getParameter("articleId");
-        response.sendRedirect("article.jsp?id=" + articleId);
+        int articleId = Integer.parseInt(request.getParameter("articleId"));
+        forwardToArticlePage(request, response, articleId);
     }
 
-    private void updateCommentStatus(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+    private void updateCommentStatus(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
         int commentId = Integer.parseInt(request.getParameter("commentId"));
         String status = request.getParameter("status");
 
         CommentDTO commentDTO = CommentDTO.modelToDTO(commentService.getCommentById(commentId));
 
         if ("approve".equalsIgnoreCase(status)) {
-            commentDTO.setStatus(CommentStatus.APPROVED);
+            commentDTO.setStatus(CommentStatus.approved);
         } else if ("reject".equalsIgnoreCase(status)) {
             commentDTO.setStatus(CommentStatus.REJECTED);
         }
 
         commentService.updateComment(commentDTO);
 
-        String articleId = request.getParameter("articleId");
-        response.sendRedirect("article.jsp?id=" + articleId);
+        int articleId = Integer.parseInt(request.getParameter("articleId"));
+        forwardToArticlePage(request, response, articleId);
+    }
+
+    private void forwardToArticlePage(HttpServletRequest request, HttpServletResponse response, int articleId) throws IOException {
+        response.sendRedirect(request.getContextPath() + "/article?action=view&id=" + articleId);
     }
 }

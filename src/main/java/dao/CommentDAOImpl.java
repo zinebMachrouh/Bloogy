@@ -2,6 +2,7 @@ package dao;
 
 import dao.Interfaces.CommentDAO;
 import models.Comment;
+import models.enums.CommentStatus;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -20,6 +21,15 @@ public class CommentDAOImpl implements CommentDAO {
     public Comment addComment(Comment comment) throws SQLException {
         Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
+
+            if (comment.getCreationDate() == null){
+                comment.setCreationDate(new java.util.Date());
+            }
+
+            if (comment.getStatus() == null){
+                comment.setStatus(CommentStatus.approved);
+            }
+
             transaction = session.beginTransaction();
             session.save(comment);
             transaction.commit();
@@ -76,9 +86,13 @@ public class CommentDAOImpl implements CommentDAO {
     @Override
     public List<Comment> getAllComments(int articleId) throws SQLException {
         try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("from Comment c where c.article.id = :articleId order by c.creationDate desc", Comment.class)
+            List<Comment> comments = session.createQuery("from Comment c where c.article.id = :articleId and status = :status order by c.creationDate desc", Comment.class)
                     .setParameter("articleId", articleId)
+                    .setParameter("status", CommentStatus.approved)
                     .list();
+            System.out.println("Comments found: " + comments.size());
+            System.out.println("Getting comments for article: " + articleId);
+            return comments;
         } catch (Exception e) {
             e.printStackTrace();
             throw new SQLException("Failed to get comments for the specified article", e);

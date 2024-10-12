@@ -1,6 +1,6 @@
 package models.enums;
 
 public enum CommentStatus {
-    APPROVED,
+    approved,
     REJECTED
 }

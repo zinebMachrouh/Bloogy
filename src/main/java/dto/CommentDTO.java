@@ -20,7 +20,13 @@ public class CommentDTO {
         this.id = id;
         this.content = content;
         this.creationDate = creationDate;
-        this.status = CommentStatus.APPROVED;
+        this.status = CommentStatus.approved;
+        this.article = article;
+        this.user = user;
+    }
+
+    public CommentDTO(String content, ArticleDTO article, UserDTO user) {
+        this.content = content;
         this.article = article;
         this.user = user;
     }
@@ -95,15 +101,12 @@ public class CommentDTO {
 
     public Comment dtoToModel(){
         return new Comment(
-                this.id,
                 this.content,
-                this.creationDate,
-                this.status,
                 this.article.dtoToModel(),
                 this.user.dtoToModel());
     }
 
     public static CommentDTO modelToDTO(Comment comment){
-        return new CommentDTO(comment.getId(), comment.getContent(), comment.getCreationDate(), ArticleDTO.modelToDTO(comment.getArticle()), UserDTO.modelToDTO(comment.getUser()));
+        return new CommentDTO(comment.getContent(),ArticleDTO.modelToDTO(comment.getArticle()), UserDTO.modelToDTO(comment.getUser()));
     }
 }

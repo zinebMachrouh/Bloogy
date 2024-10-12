@@ -30,7 +30,7 @@ public class CommentServiceImpl implements CommentService {
         Comment comment = commentDAO.getCommentById(commentDTO.getId()); // Retrieve the comment first
         if (comment != null) {
             comment.setContent(commentDTO.getContent());
-            comment.setStatus(CommentStatus.APPROVED);  // Example: Update status or other fields
+            //comment.setStatus(CommentStatus.APPROVED);  // Example: Update status or other fields
             return commentDAO.updateComment(comment);  // Then update the comment
         }
         throw new SQLException("Comment not found");

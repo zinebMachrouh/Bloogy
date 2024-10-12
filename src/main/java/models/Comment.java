@@ -14,14 +14,15 @@ public class Comment {
     @Column(name = "content", nullable = false)
     private String content;
 
-    @Column(name = "creationDate", nullable = false)
+    @Column(name = "creationDate")
     private Date creationDate;
 
-    @Column(name = "status", nullable = false)
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
     private CommentStatus status;
 
-    @ManyToOne
-    @JoinColumn(name = "article_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "article_id")
     private Article article;
 
     @ManyToOne
@@ -36,6 +37,12 @@ public class Comment {
         this.content = content;
         this.creationDate = creationDate;
         this.status = status;
+        this.article = article;
+        this.user = user;
+    }
+
+    public Comment(String content, Article article, User user) {
+        this.content = content;
         this.article = article;
         this.user = user;
     }

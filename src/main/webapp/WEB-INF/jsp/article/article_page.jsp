@@ -1,4 +1,4 @@
-<%--
+<%@ page import="dto.ArticleDTO" %><%--
   Created by IntelliJ IDEA.
   User: rayane
   Date: 10/11/2024
@@ -8,9 +8,16 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Article Page</title>
+    <title>Article</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://kit.fontawesome.com/6e1faf1eda.js" crossorigin="anonymous"></script>
+    <style>
+        .comments{
+            .comment{
+                padding: 10px 0;
+            }
+        }
+    </style>
 </head>
 <body>
 <nav class="flex justify-between py-5 items-center" style="padding: 20px 95px; background-color: #FAFAFA">
@@ -57,8 +64,62 @@
         <div class="w-2/6  px-4 mb-8 h-100" >
             <div class="px-4 py-2 rounded h-full" style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; background-color: #fff">
                 <h3 class="text-lg font-bold mb-2" style="color: #0096C7; font-size: 26px;height: 5%">Comments</h3>
-                <div class="comments" style="height: 85%; overflow: auto; background-color: red">
-                    <div class="comment"></div>
+                <div class="comments" style="height: 85%; overflow: auto;">
+                    <div class="comment">
+                        <div class="flex align-center" style="gap: 5px;">
+                            <p class="font-semibold">John Doe</p>
+                            <p class="text-gray-500">12/12/2021</p>
+                        </div>
+                        <p class="text-gray-700">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec purus feugiat,kfjdfhfduk</p>
+                    </div><div class="comment">
+                        <div class="flex align-center" style="gap: 5px;">
+                            <p class="font-semibold">John Doe</p>
+                            <p class="text-gray-500">12/12/2021</p>
+                        </div>
+                        <p class="text-gray-700">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec purus feugiat,kfjdfhfduk</p>
+                    </div><div class="comment">
+                        <div class="flex align-center" style="gap: 5px;">
+                            <p class="font-semibold">John Doe</p>
+                            <p class="text-gray-500">12/12/2021</p>
+                        </div>
+                        <p class="text-gray-700">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec purus feugiat,kfjdfhfduk</p>
+                    </div><div class="comment">
+                        <div class="flex align-center" style="gap: 5px;">
+                            <p class="font-semibold">John Doe</p>
+                            <p class="text-gray-500">12/12/2021</p>
+                        </div>
+                        <p class="text-gray-700">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec purus feugiat,kfjdfhfduk</p>
+                    </div><div class="comment">
+                        <div class="flex align-center" style="gap: 5px;">
+                            <p class="font-semibold">John Doe</p>
+                            <p class="text-gray-500">12/12/2021</p>
+                        </div>
+                        <p class="text-gray-700">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec purus feugiat,kfjdfhfduk</p>
+                    </div><div class="comment">
+                        <div class="flex align-center" style="gap: 5px;">
+                            <p class="font-semibold">John Doe</p>
+                            <p class="text-gray-500">12/12/2021</p>
+                        </div>
+                        <p class="text-gray-700">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec purus feugiat,kfjdfhfduk</p>
+                    </div><div class="comment">
+                        <div class="flex align-center" style="gap: 5px;">
+                            <p class="font-semibold">John Doe</p>
+                            <p class="text-gray-500">12/12/2021</p>
+                        </div>
+                        <p class="text-gray-700">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec purus feugiat,kfjdfhfduk</p>
+                    </div><div class="comment">
+                        <div class="flex align-center" style="gap: 5px;">
+                            <p class="font-semibold">John Doe</p>
+                            <p class="text-gray-500">12/12/2021</p>
+                        </div>
+                        <p class="text-gray-700">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec purus feugiat,kfjdfhfduk</p>
+                    </div><div class="comment">
+                        <div class="flex align-center" style="gap: 5px;">
+                            <p class="font-semibold">John Doe</p>
+                            <p class="text-gray-500">12/12/2021</p>
+                        </div>
+                        <p class="text-gray-700">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec purus feugiat,kfjdfhfduk</p>
+                    </div>
                 </div>
                 <div style="height: 7.5%;" class="flex flex-col justify-center align-center">
                     <form method="post" class="my-auto" style="background-color: #FFC636; height: 90%; background-color: #fff; border-top: solid #e0dfdf 1px;">

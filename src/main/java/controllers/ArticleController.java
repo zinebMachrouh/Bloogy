@@ -22,6 +22,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -42,16 +45,15 @@ public class ArticleController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String pathInfo = request.getPathInfo(); // This will give you the path after "/article"
+        String pathInfo = request.getPathInfo();
 
         if (pathInfo != null) {
             String[] pathParts = pathInfo.split("/");
 
             if (pathParts.length > 1) {
-                String action = pathParts[1]; // Get the action (e.g., "view" or "management")
+                String action = pathParts[1];
 
                 if ("view".equals(action) && pathParts.length > 2) {
-                    // Extract article ID from the URL
                     int articleId = Integer.parseInt(pathParts[2]);
                     try {
                         ArticleDTO article = ArticleDTO.modelToDTO(articleService.getArticleById(articleId));
@@ -96,50 +98,93 @@ public class ArticleController extends HttpServlet {
         String action = request.getParameter("action");
 
         if ("delete".equals(action)) {
-            // Handle deletion of the article
             Integer articleId = Integer.parseInt(request.getParameter("id"));
             try {
-                // Call the service to delete the article
-                articleService.deleteArticle(articleId); // Ensure this method exists in your service
-                // Redirect after deleting
+                articleService.deleteArticle(articleId);
                 response.sendRedirect(request.getContextPath() + "/article/management");
             } catch (SQLException e) {
                 System.out.println("Failed to delete article: " + e.getMessage());
-                // Handle error (e.g., show an error message)
             }
-        } else {
-            // Collect form data for adding a new article
+        } else if ("update".equals(action)) {
+
+            Integer articleId = Integer.parseInt(request.getParameter("id"));
             String title = request.getParameter("title");
             String content = request.getParameter("content");
-            ArticleStatus status = ArticleStatus.valueOf(request.getParameter("status")); // Convert to enum
+            String statusParam = request.getParameter("status");
+            ArticleStatus status = null;
+
+            if (statusParam != null && !statusParam.isEmpty()) {
+                try {
+                    status = ArticleStatus.valueOf(statusParam);
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Invalid status value: " + statusParam);
+                }
+            } else {
+                System.out.println("Status is null or empty.");
+                // Handle the case where status is not provided
+            }
+            Integer categoryId = request.getParameter("categoryId") != null ? Integer.parseInt(request.getParameter("categoryId")) : null;
+            Integer userId = request.getParameter("userId") != null ? Integer.parseInt(request.getParameter("userId")) : null;
+
+            if (articleId == null || categoryId == null || userId == null) {
+                response.sendRedirect(request.getContextPath() + "/article/management?error=missingParameters");
+                return;
+            }
+
+            // Date parsing
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate createdAt = null;
+            LocalDate lunchedAt = null;
+
+            try {
+                createdAt = LocalDate.parse(request.getParameter("createdAt"), formatter);
+                String lunchedAtStr = request.getParameter("lunchedAt");
+                if (lunchedAtStr != null && !lunchedAtStr.isEmpty()) {
+                    lunchedAt = LocalDate.parse(lunchedAtStr, formatter);
+                }
+            } catch (DateTimeParseException e) {
+                System.out.println("Failed to parse date: " + e.getMessage());
+            }
+
+            ArticleDTO updatedArticle = new ArticleDTO();
+            updatedArticle.setId(articleId);
+            updatedArticle.setTitle(title);
+            updatedArticle.setContent(content);
+            updatedArticle.setCreatedAt(java.sql.Date.valueOf(createdAt));
+            updatedArticle.setLunchedAt(lunchedAt != null ? java.sql.Date.valueOf(lunchedAt) : null);
+            updatedArticle.setStatus(status);
+            updatedArticle.setCategory(new CategoryDTO(categoryId, null, null));
+            updatedArticle.setUser(new UserDTO(userId, null, null, null, null));
+
+            try {
+                articleService.updateArticle(updatedArticle);
+                response.sendRedirect(request.getContextPath() + "/article/management");
+            } catch (SQLException e) {
+                System.out.println("Failed to update article: " + e.getMessage());
+            }
+        } else {
+            String title = request.getParameter("title");
+            String content = request.getParameter("content");
+            ArticleStatus status = ArticleStatus.valueOf(request.getParameter("status"));
             Integer categoryId = Integer.parseInt(request.getParameter("categoryId"));
             Integer userId = Integer.parseInt(request.getParameter("userId"));
 
-            // Create ArticleDTO
             ArticleDTO newArticle = new ArticleDTO();
             newArticle.setTitle(title);
             newArticle.setContent(content);
-            newArticle.setCreatedAt(null); // Set createdAt as needed (consider setting to current date)
-            newArticle.setLunchedAt(null); // Set lunchedAt as needed
+            newArticle.setCreatedAt(null);
+            newArticle.setLunchedAt(null);
             newArticle.setStatus(status);
-            newArticle.setCategory(new CategoryDTO(categoryId, null, null)); // Populate as needed
-            newArticle.setUser(new UserDTO(userId, null, null, null, null)); // Populate as needed
+            newArticle.setCategory(new CategoryDTO(categoryId, null, null));
+            newArticle.setUser(new UserDTO(userId, null, null, null, null));
 
             try {
-                // Call the service to add the article
                 articleService.addArticle(newArticle);
-                // Redirect or forward after adding
                 response.sendRedirect(request.getContextPath() + "/article/management");
             } catch (SQLException e) {
                 System.out.println("Failed to add article: " + e.getMessage());
-                // Handle error (e.g., show an error message)
             }
         }
     }
-
-
-
-
-
 
 }

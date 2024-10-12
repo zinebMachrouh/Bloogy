@@ -6,12 +6,17 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
 import java.util.List;
 
+import static com.mysql.cj.conf.PropertyKey.logger;
+
 public class ArticleDAOImpl implements ArticleDAO {
     private final SessionFactory sessionFactory;
+    private static final Logger logger = LoggerFactory.getLogger(ArticleDAOImpl.class);
 
     public ArticleDAOImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
@@ -35,15 +40,23 @@ public class ArticleDAOImpl implements ArticleDAO {
         Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
-            session.update(article);
+
+            // Use merge instead of update
+            Article updatedArticle = (Article) session.merge(article);
+
             transaction.commit();
-            return article;
+            return updatedArticle;
         } catch (Exception e) {
-            if (transaction != null) transaction.rollback();
-            e.printStackTrace();
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            // Log the exception
+            logger.error("Failed to update article", e); // Assuming logger is set up
             throw new SQLException("Failed to update article", e);
         }
     }
+
+
 
     public void deleteArticle(int id) throws SQLException {
         Transaction transaction = null;

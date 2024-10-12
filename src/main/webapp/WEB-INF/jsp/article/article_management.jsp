@@ -60,7 +60,44 @@
         </form>
     </div>
 
-    <!-- Article Table -->
+    <!-- Update Article Modal -->
+    <div id="updateArticleModal" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 hidden">
+        <div class="bg-white p-6 rounded shadow-lg w-96">
+            <h3 class="text-lg font-bold mb-4">Update Article</h3>
+            <form id="updateArticleForm" action="${pageContext.request.contextPath}/article?action=update" method="post">
+                <input type="hidden" name="id" id="updateArticleId">
+                <div class="mb-4">
+                    <label for="updateTitle" class="block text-gray-700">Title:</label>
+                    <input type="text" id="updateTitle" name="title" class="w-full border px-2 py-1" required>
+                </div>
+                <div class="mb-4">
+                    <label for="updateContent" class="block text-gray-700">Content:</label>
+                    <textarea id="updateContent" name="content" class="w-full border px-2 py-1" required></textarea>
+                </div>
+                <div class="mb-4">
+                    <label for="updateCreatedAt" class="block text-gray-700">Created At:</label>
+                    <input type="date" id="updateCreatedAt" name="createdAt" class="w-full border px-2 py-1" required>
+                </div>
+                <div class="mb-4">
+                    <label for="updateLunchedAt" class="block text-gray-700">Lunched At:</label>
+                    <input type="date" id="updateLunchedAt" name="lunchedAt" class="w-full border px-2 py-1">
+                </div>
+                <div class="mb-4">
+                    <label for="updateStatus" class="block text-gray-700">Status:</label>
+                    <select id="updateStatus" name="status" class="w-full border px-2 py-1">
+                        <option value="DRAFT">Draft</option>
+                        <option value="PUBLISHED">Published</option>
+                    </select>
+                </div>
+                <div>
+                    <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded">Update</button>
+                    <button type="button" class="bg-red-500 text-white px-4 py-2 rounded" onclick="hideUpdateModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
     <table class="table-auto w-full mt-8">
         <thead>
         <tr>
@@ -83,16 +120,23 @@
                 <td class="border px-4 py-2">${article.createdAt}</td>
                 <td class="border px-4 py-2">${article.lunchedAt}</td>
                 <td class="border px-4 py-2">${article.status}</td>
-                <td class="border px-4 py-2">${article.category.name}</td> <!-- Assuming the category object has a name property -->
+                <td class="border px-4 py-2">${article.category.id}</td>
                 <td class="border px-4 py-2">
-                    <form action="${pageContext.request.contextPath}/article?action=delete&id=${article.id}" method="post" onsubmit="return confirm('Are you sure you want to delete this article?');">
+                    <button type="button" class="text-green-500"
+                            onclick="showUpdateModal('${article.id}', '${article.title}', '${article.content}', '${article.createdAt}', '${article.lunchedAt}', '${article.status}')">
+                        Update
+                    </button>
+                    <form action="${pageContext.request.contextPath}/article?action=delete&id=${article.id}" method="post"
+                          onsubmit="return confirm('Are you sure you want to delete this article?');" class="mt-1">
                         <button type="submit" class="text-red-500">Delete</button>
                     </form>
                 </td>
+
             </tr>
         </c:forEach>
         </tbody>
     </table>
+
 </main>
 
 <script>
@@ -103,6 +147,23 @@
     function hideForm() {
         document.getElementById("addArticleForm").style.display = "none";
     }
+
+    function showUpdateModal(id, title, content, createdAt, lunchedAt, status) {
+        document.getElementById("updateArticleId").value = id;
+        document.getElementById("updateTitle").value = title;
+        document.getElementById("updateContent").value = content;
+        document.getElementById("updateCreatedAt").value = createdAt;
+        document.getElementById("updateLunchedAt").value = lunchedAt;
+        document.getElementById("updateStatus").value = status;
+
+        document.getElementById("updateArticleModal").classList.remove("hidden");
+    }
+
+    function hideUpdateModal() {
+        document.getElementById("updateArticleModal").classList.add("hidden");
+    }
+
 </script>
+
 </body>
 </html>

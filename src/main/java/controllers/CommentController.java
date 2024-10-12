@@ -8,11 +8,7 @@ import dao.Interfaces.CategoryDAO;
 import dao.Interfaces.CommentDAO;
 import dao.Interfaces.UserDAO;
 import dao.UsersDAOImpl;
-import dto.ArticleDTO;
-import dto.CommentDTO;
 import dto.UserDTO;
-import models.Comment;
-import models.enums.CommentStatus;
 import org.hibernate.SessionFactory;
 import services.ArticleServiceImpl;
 import services.CommentServiceImpl;
@@ -25,9 +21,6 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.Date;
-import java.util.List;
 
 
 @WebServlet(name = "CommentController", value = "/CommentController")

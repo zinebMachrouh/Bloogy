@@ -44,7 +44,7 @@ public class Article {
     private Category category;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "author_id", nullable = false)
     private User user;
 
 
@@ -139,4 +139,6 @@ public class Article {
     public void setUser(User user) {
         this.user = user;
     }
+
+
 }

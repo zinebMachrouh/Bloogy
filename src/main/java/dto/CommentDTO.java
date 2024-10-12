@@ -107,6 +107,12 @@ public class CommentDTO {
     }
 
     public static CommentDTO modelToDTO(Comment comment){
-        return new CommentDTO(comment.getContent(),ArticleDTO.modelToDTO(comment.getArticle()), UserDTO.modelToDTO(comment.getUser()));
+        return new CommentDTO(
+                comment.getId(),
+                comment.getContent(),
+                comment.getCreationDate(),
+                ArticleDTO.modelToDTO(comment.getArticle()),
+                UserDTO.modelToDTO(comment.getUser())
+        );
     }
 }

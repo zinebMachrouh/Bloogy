@@ -9,7 +9,9 @@ import dao.Interfaces.CommentDAO;
 import dao.Interfaces.UserDAO;
 import dao.UsersDAOImpl;
 import dto.ArticleDTO;
+import dto.CommentDTO;
 import models.Comment;
+import models.enums.CommentStatus;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import services.ArticleServiceImpl;
@@ -26,6 +28,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 public class ArticleController extends HttpServlet {
     private ArticleService articleService;
@@ -57,9 +60,14 @@ public class ArticleController extends HttpServlet {
             int articleId = Integer.parseInt(request.getParameter("id")); // Get the article ID from the request
             try {
                 ArticleDTO article = ArticleDTO.modelToDTO(articleService.getArticleById(articleId)); // Fetch the article by ID
-                List<Comment> comments = commentService.getAllComments(articleId); // Fetch all comments for the article
+                List<Comment> comments = commentService.getAllComments(articleId);
+                List<CommentDTO> commentDTOs = comments.stream()
+                        .filter(comment -> comment.getStatus() == models.enums.CommentStatus.approved)
+                        .map(CommentDTO::modelToDTO)
+                        .collect(Collectors.toList());
+
                 System.out.println("Comments: " + comments);
-                request.setAttribute("comments", comments);
+                request.setAttribute("comments", commentDTOs);
                 request.setAttribute("article", article); // Set the article as request attribute
                 request.getRequestDispatcher("/WEB-INF/jsp/article/article_page.jsp").forward(request, response);
             } catch (SQLException e) {

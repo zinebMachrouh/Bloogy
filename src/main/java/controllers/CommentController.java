@@ -114,7 +114,7 @@ public class CommentController extends HttpServlet {
 
     private void updateCommentContent(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
         int commentId = Integer.parseInt(request.getParameter("commentId"));
-        String newContent = request.getParameter("content");
+        String newContent = request.getParameter("content_updated");
 
         CommentDTO commentDTO = CommentDTO.modelToDTO(commentService.getCommentById(commentId));
         commentDTO.setContent(newContent);
@@ -126,15 +126,9 @@ public class CommentController extends HttpServlet {
 
     private void updateCommentStatus(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
         int commentId = Integer.parseInt(request.getParameter("commentId"));
-        String status = request.getParameter("status");
 
         CommentDTO commentDTO = CommentDTO.modelToDTO(commentService.getCommentById(commentId));
-
-        if ("approve".equalsIgnoreCase(status)) {
-            commentDTO.setStatus(CommentStatus.approved);
-        } else if ("reject".equalsIgnoreCase(status)) {
-            commentDTO.setStatus(CommentStatus.REJECTED);
-        }
+        commentDTO.setStatus(CommentStatus.rejected);
 
         commentService.updateComment(commentDTO);
 

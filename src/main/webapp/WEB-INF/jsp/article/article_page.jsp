@@ -18,7 +18,54 @@
         .comments{
             .comment{
                 padding: 10px 0;
+                .top{
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                }
             }
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropbtn {
+            background-color: #fff;
+            border: none;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+            min-width: 160px;
+            z-index: 1;
+            right: 0;
+        }
+
+        .dropdown-content .dropdown-option {
+            background-color: #fff;
+            color: black;
+            padding: 12px 16px;
+            text-align: left;
+            text-decoration: none;
+            display: block;
+            width: 100%;
+            border: none;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .dropdown-content .dropdown-option:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
         }
     </style>
 </head>
@@ -70,24 +117,49 @@
                 <div class="comments" style="height: 85%; overflow: auto;">
                     <%-- Retrieve the comments from the request --%>
                     <%
-                        List<Comment> comments = (List<Comment>) request.getAttribute("comments");
+                        List<CommentDTO> comments = (List<CommentDTO>) request.getAttribute("comments");
 
-                        if (comments.isEmpty()) {
-                            for (Comment comment : comments) {
+                        if (comments != null && !comments.isEmpty()) {
+                            for (CommentDTO comment : comments) {
                     %>
 
                     <div class="comment">
-                        <div class="flex align-center" style="gap: 5px;">
-                            <p class="font-semibold">
-                                <%= comment.getUser().getUsername() %>
-                            </p>
-                            <p class="text-gray-500">
-                                <%= comment.getCreationDate() %>
-                            </p>
+                        <div class="top">
+                            <div class="flex align-center" style="gap: 5px;">
+                                <p class="font-semibold">
+                                    <%= comment.getUser().getUsername() %>
+                                </p>
+                                <%
+                                    java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyy-MM-dd");
+                                    String formattedDate = formatter.format(comment.getCreatedDate());
+                                    assert article != null;%>
+                                <p class="text-gray-500">
+                                    <%= formattedDate %>
+                                </p>
+                            </div>
+                            <div class="dropdown">
+                                <button class="dropbtn" style="background-color: #fff; border: none; outline: none; color: #BDC3C7">
+                                    <i class="fa-solid fa-ellipsis"></i>
+                                </button>
+                                <div class="dropdown-content">
+                                    <form method="post" action="CommentController?action=delete" style="margin: 0px">
+                                        <input type="hidden" name="commentId" value="<%= comment.getId() %>"/>
+                                        <input type="hidden" name="articleId" value="<%= article.getId() %>"/>
+                                        <button type="submit" class="dropdown-option">Delete</button>
+                                    </form>
+                                    <form method="post" action="CommentController?action=updateStatus" style="margin: 0px">
+                                        <input type="hidden" name="commentId" value="<%= comment.getId() %>"/>
+                                        <input type="hidden" name="articleId" value="<%= article.getId() %>"/>
+                                        <button type="submit" class="dropdown-option">Reject</button>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
-                        <p class="text-gray-700">
-                            <%= comment.getContent() %>
-                        </p>
+                        <form method="post"  action="CommentController?action=updateContent" class="text-gray-700" style="height: fit-content">
+                            <input type="hidden" name="commentId" value="<%= comment.getId() %>"/>
+                            <input type="hidden" name="articleId" value="<%= article.getId() %>"/>
+                            <input type="text" name="content_updated" id="content_updated" value="<%= comment.getContent() %>" class="h-full" style="border: none; outline: none"/>
+                        </form>
                     </div>
                     <%
                             }

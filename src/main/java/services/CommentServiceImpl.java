@@ -27,11 +27,11 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Comment updateComment(CommentDTO commentDTO) throws SQLException {
-        Comment comment = commentDAO.getCommentById(commentDTO.getId()); // Retrieve the comment first
+        Comment comment = commentDAO.getCommentById(commentDTO.getId());
         if (comment != null) {
             comment.setContent(commentDTO.getContent());
-            //comment.setStatus(CommentStatus.APPROVED);  // Example: Update status or other fields
-            return commentDAO.updateComment(comment);  // Then update the comment
+            comment.setStatus(commentDTO.getStatus());
+            return commentDAO.updateComment(comment);
         }
         throw new SQLException("Comment not found");
     }

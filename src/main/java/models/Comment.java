@@ -21,7 +21,7 @@ public class Comment {
     @Enumerated(EnumType.STRING)
     private CommentStatus status;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "article_id")
     private Article article;
 

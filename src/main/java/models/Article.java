@@ -49,7 +49,7 @@ public class Article {
     private User user;
 
 
-    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "article", fetch = FetchType.EAGER, cascade = CascadeType.ALL) 
     private List<Comment> comments;
 
 

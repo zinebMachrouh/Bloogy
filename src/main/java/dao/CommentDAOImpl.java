@@ -1,6 +1,7 @@
 package dao;
 
 import dao.Interfaces.CommentDAO;
+import models.Article;
 import models.Comment;
 import models.enums.CommentStatus;
 import org.hibernate.Session;
@@ -61,8 +62,16 @@ public class CommentDAOImpl implements CommentDAO {
         Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
+
             Comment comment = session.get(Comment.class, id);
+
             if (comment != null) {
+                Article article = comment.getArticle();
+                if (article != null) {
+                    article.getComments().remove(comment);
+                    session.update(article);
+                }
+                
                 session.delete(comment);
                 transaction.commit();
             }

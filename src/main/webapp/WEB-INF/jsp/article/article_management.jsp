@@ -16,45 +16,93 @@
     </div>
 </nav>
 <main class="container mx-auto mt-8">
-    <h2 class="text-2xl font-bold mb-6">List of Articles</h2>
-    <table class="min-w-full bg-white border border-gray-200">
+    <button class="bg-blue-500 text-white px-4 py-2 rounded" onclick="showForm()">Add Article</button>
+
+    <!-- Add Article Form -->
+    <div id="addArticleForm" class="mt-4 p-4 border rounded bg-gray-100" style="display: none;">
+        <h3 class="text-lg font-bold mb-4">Add New Article</h3>
+        <form action="${pageContext.request.contextPath}/article" method="post">
+            <div class="mb-4">
+                <label for="title" class="block text-gray-700">Title:</label>
+                <input type="text" id="title" name="title" class="w-full border px-2 py-1" required>
+            </div>
+            <div class="mb-4">
+                <label for="content" class="block text-gray-700">Content:</label>
+                <textarea id="content" name="content" class="w-full border px-2 py-1" required></textarea>
+            </div>
+            <div class="mb-4">
+                <label for="createdAt" class="block text-gray-700">Created At (yyyy-mm-dd):</label>
+                <input type="date" id="createdAt" name="createdAt" class="w-full border px-2 py-1" required>
+            </div>
+            <div class="mb-4">
+                <label for="lunchedAt" class="block text-gray-700">Lunched At (yyyy-mm-dd):</label>
+                <input type="date" id="lunchedAt" name="lunchedAt" class="w-full border px-2 py-1">
+            </div>
+            <div class="mb-4">
+                <label for="status" class="block text-gray-700">Status:</label>
+                <select id="status" name="status" class="w-full border px-2 py-1">
+                    <option value="DRAFT">Draft</option>
+                    <option value="PUBLISHED">Published</option>
+                </select>
+            </div>
+            <div class="mb-4">
+                <label for="category" class="block text-gray-700">Category ID:</label>
+                <input type="text" id="category" name="categoryId" class="w-full border px-2 py-1" required>
+            </div>
+            <div class="mb-4">
+                <label for="user" class="block text-gray-700">User ID:</label>
+                <input type="text" id="user" name="userId" class="w-full border px-2 py-1">
+            </div>
+            <div>
+                <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded">Submit</button>
+                <button type="button" class="bg-red-500 text-white px-4 py-2 rounded" onclick="hideForm()">Cancel</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Article Table -->
+    <table class="table-auto w-full mt-8">
         <thead>
         <tr>
-            <th class="py-2 px-4 border-b">ID</th>
-            <th class="py-2 px-4 border-b">Title</th>
-            <th class="py-2 px-4 border-b">Content</th>
-            <th class="py-2 px-4 border-b">Published Date</th>
-            <th class="py-2 px-4 border-b">Status</th>
-            <th class="py-2 px-4 border-b">Actions</th>
+            <th class="px-4 py-2">ID</th>
+            <th class="px-4 py-2">Title</th>
+            <th class="px-4 py-2">Content</th>
+            <th class="px-4 py-2">Created At</th>
+            <th class="px-4 py-2">Lunched At</th>
+            <th class="px-4 py-2">Status</th>
+            <th class="px-4 py-2">Category</th>
+            <th class="px-4 py-2">Actions</th>
         </tr>
         </thead>
         <tbody>
-        <c:choose>
-            <c:when test="${not empty articles}">
-                <c:forEach var="article" items="${articles}">
-                    <tr>
-                        <td class="py-2 px-4 border-b">${article.id}</td>
-                        <td class="py-2 px-4 border-b">${article.title}</td>
-                        <td class="py-2 px-4 border-b">
-                            <c:out value="${article.content}" escapeXml="true"/>
-                            <c:if test="${article.content.length() > 50}">...</c:if>
-                        </td>
-                        <td class="py-2 px-4 border-b">${article.createdAt}</td>
-                        <td class="py-2 px-4 border-b">${article.status}</td>
-                        <td class="py-2 px-4 border-b">
-                            <a href="article?action=view&id=${article.id}" class="text-blue-500 hover:underline">View</a>
-                        </td>
-                    </tr>
-                </c:forEach>
-            </c:when>
-            <c:otherwise>
-                <tr>
-                    <td colspan="6" class="py-2 px-4 text-center">No articles found.</td>
-                </tr>
-            </c:otherwise>
-        </c:choose>
+        <c:forEach var="article" items="${articles}">
+            <tr>
+                <td class="border px-4 py-2">${article.id}</td>
+                <td class="border px-4 py-2">${article.title}</td>
+                <td class="border px-4 py-2">${article.content}</td>
+                <td class="border px-4 py-2">${article.createdAt}</td>
+                <td class="border px-4 py-2">${article.lunchedAt}</td>
+                <td class="border px-4 py-2">${article.status}</td>
+                <td class="border px-4 py-2">${article.category.name}</td> <!-- Assuming the category object has a name property -->
+                <td class="border px-4 py-2">
+                    <form action="${pageContext.request.contextPath}/article?action=delete&id=${article.id}" method="post" onsubmit="return confirm('Are you sure you want to delete this article?');">
+                        <button type="submit" class="text-red-500">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        </c:forEach>
         </tbody>
     </table>
 </main>
+
+<script>
+    function showForm() {
+        document.getElementById("addArticleForm").style.display = "block";
+    }
+
+    function hideForm() {
+        document.getElementById("addArticleForm").style.display = "none";
+    }
+</script>
 </body>
 </html>

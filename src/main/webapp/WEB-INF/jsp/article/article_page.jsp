@@ -10,9 +10,10 @@
 <head>
     <title>Article Page</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/6e1faf1eda.js" crossorigin="anonymous"></script>
 </head>
 <body>
-<nav class="flex justify-between py-5 items-center bg-white" style="padding: 25px 120px">
+<nav class="flex justify-between py-5 items-center" style="padding: 20px 95px; background-color: #FAFAFA">
     <h1 class="text-xl text-gray-800 font-bold">Bloogy</h1>
     <div class="flex items-center gap-8">
         <div class="flex items-center border-2 border-black rounded">
@@ -32,29 +33,39 @@
         </ul>
     </div>
 </nav>
-<main class="container mx-auto mt-8">
-    <div class="flex flex-wrap justify-between">
-        <div class="w-full md:w-8/12 px-4 mb-8">
-            <img src="" alt="Featured Image" class="w-full h-64 object-cover rounded bg-red">
-            <h2 class="text-4xl font-bold mt-4 mb-2">My First Blog Post</h2>
-            <p class="text-gray-700 mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                laboris nisi ut aliquip ex ea commodo consequat.</p>
-            <p class="text-gray-700 mb-4">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
-                eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-                deserunt mollit anim id est laborum.</p>
-            <p class="text-gray-700 mb-4">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
-                doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi
-                architecto beatae vitae dicta sunt explicabo.</p>
+<main class="px-20 mt-8 w-full mx-auto" style="height: 85vh; background-color: #FAFAFA">
+    <div class="w-full flex flex-wrap justify-between h-full">
+        <div class="w-4/6 px-4 mb-8">
+            <%-- Retrieve the article from the request --%>
+            <%
+                ArticleDTO article = (ArticleDTO) request.getAttribute("article");
+                if (article != null) {
+            %>
+            <img src="https://images.squarespace-cdn.com/content/v1/54822a56e4b0b30bd821480c/45ed8ecf-0bb2-4e34-8fcf-624db47c43c8/Golden+Retrievers+dans+pet+care.jpeg" alt="Featured Image" class="w-full h-64 object-cover rounded bg-red">
+            <h2 class="text-4xl font-bold mt-4 mb-2"><%= article.getTitle() %></h2>
+            <p class="text-gray-700 mb-4"><%= article.getContent() %></p>
+            <p class="text-gray-700 mb-4">Published on: <%= article.getCreatedAt() %></p>
+            <p class="text-gray-700 mb-4">Status: <%= article.getStatus() %></p>
+            <%
+            } else {
+            %>
+            <p class="text-red-500">Article not found.</p>
+            <%
+                }
+            %>
         </div>
-        <div class="w-full md:w-4/12 px-4 mb-8">
-            <div class="bg-gray-100 px-4 py-6 rounded">
-                <h3 class="text-lg font-bold mb-2">Categories</h3>
-                <ul class="list-disc list-inside">
-                    <li><a href="#" class="text-gray-700 hover:text-gray-900">Technology</a></li>
-                    <li><a href="#" class="text-gray-700 hover:text-gray-900">Travel</a></li>
-                    <li><a href="#" class="text-gray-700 hover:text-gray-900">Food</a></li>
-                </ul>
+        <div class="w-2/6  px-4 mb-8 h-100" >
+            <div class="px-4 py-2 rounded h-full" style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; background-color: #fff">
+                <h3 class="text-lg font-bold mb-2" style="color: #0096C7; font-size: 26px;height: 5%">Comments</h3>
+                <div class="comments" style="height: 85%; overflow: auto; background-color: red">
+                    <div class="comment"></div>
+                </div>
+                <div style="height: 7.5%;" class="flex flex-col justify-center align-center">
+                    <form method="post" class="my-auto" style="background-color: #FFC636; height: 90%; background-color: #fff; border-top: solid #e0dfdf 1px;">
+                        <input type="text" name="comment" id="comment" placeholder="Share your thoughts <3" class="h-full" style="width: 90%; padding: 0 10px; border: none; outline: none">
+                        <button type="submit" class="" style="color: #BDC3C7"><i class="fa-regular fa-paper-plane" style="width: 10%; margin: auto"></i></button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

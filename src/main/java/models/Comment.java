@@ -93,7 +93,7 @@ public class Comment {
                 ", creationDate=" + creationDate +
                 ", status=" + status +
                 ", article=" + article +
-                //", user=" + user +
+                ", user=" + user +
                 '}';
     }
 

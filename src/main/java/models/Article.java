@@ -1,5 +1,6 @@
 package models;
 
+import dto.ArticleDTO;
 import models.enums.ArticleStatus;
 
 import javax.persistence.*;
@@ -139,4 +140,5 @@ public class Article {
     public void setUser(User user) {
         this.user = user;
     }
+
 }

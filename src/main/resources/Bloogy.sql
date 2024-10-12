@@ -11,7 +11,7 @@ CREATE TABLE users (
                        is_active BOOLEAN DEFAULT TRUE NOT NULL,
                        date_joined TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
                        is_verified BOOLEAN DEFAULT FALSE NOT NULL,
-                       role ENUM('admin', 'editor', 'contributor') NOT NULL,
+                       role ENUM('ADMIN', 'EDITOR', 'CONTRIBUTOR') NOT NULL,
                        verification_token VARCHAR(255),
                        reset_token VARCHAR(255),
                        reset_token_expiry TIMESTAMP
@@ -33,7 +33,7 @@ CREATE TABLE articles (
                           content VARCHAR(255) NOT NULL,
                           created_at TIMESTAMP NOT NULL,
                           published_at TIMESTAMP NULL,
-                          status ENUM('draft', 'published') DEFAULT 'draft' NOT NULL,
+                          status ENUM('DRAFT', 'PUBLISHED') DEFAULT 'DRAFT' NOT NULL,
                           author_id INT,
                           category_id INT,
                           FOREIGN KEY (author_id) REFERENCES users(id), -- References users table for article authors
@@ -45,7 +45,7 @@ CREATE TABLE comments (
                           id INT AUTO_INCREMENT PRIMARY KEY,
                           content VARCHAR(255) NOT NULL,
                           creationDate TIMESTAMP NOT NULL,
-                          status ENUM('approved', 'rejected') DEFAULT 'approved' NOT NULL,
+                          status ENUM('APPROVED', 'REJECTED') DEFAULT 'APPROVED' NOT NULL,
                           article_id INT,
                           user_id INT,
                           FOREIGN KEY (article_id) REFERENCES articles(id),

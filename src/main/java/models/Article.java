@@ -48,9 +48,6 @@ public class Article {
     private User user;
 
 
-
-
-
     public Article() {
     }
 

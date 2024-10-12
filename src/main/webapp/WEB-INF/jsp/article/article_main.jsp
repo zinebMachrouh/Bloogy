@@ -52,7 +52,7 @@
             <div class="flex justify-between flex-wrap">
                 <c:forEach var="article" items="${articles}">
                     <!-- Secondary Article Section -->
-                    <div class="transition-all duration-150 flex w-full px-4 md:w-1/2 mb-6">
+                    <div class="transition-all duration-150 w-full px-4 md:w-1/2 mb-6">
                         <div class="flex flex-col items-stretch min-h-full pb-4 mb-6 transition-all duration-150 bg-white rounded-lg" style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;">
                             <div class="md:flex-shrink-0">
                                 <img src="https://www.unfe.org/wp-content/uploads/2019/04/SM-placeholder-1024x512.png" alt="Blog Cover" class="object-fill w-full rounded-lg rounded-b-none md:h-56"/>

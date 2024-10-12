@@ -37,28 +37,39 @@ public class ArticleController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String action = request.getParameter("action");
+        String path = request.getPathInfo();
 
-        if ("view".equals(action)) {
-            // Display specific article
-            int articleId = Integer.parseInt(request.getParameter("id")); // Get the article ID from the request
+        if ("/view".equals(path)) {
+            // Display a specific article
+            int articleId = Integer.parseInt(request.getParameter("id"));
             try {
-                ArticleDTO article = ArticleDTO.modelToDTO(articleService.getArticleById(articleId)); // Fetch the article by ID
-                request.setAttribute("article", article); // Set the article as request attribute
-                request.getRequestDispatcher("/WEB-INF/jsp/article/article_page.jsp").forward(request, response); // Forward to the detail JSP
+                ArticleDTO article = ArticleDTO.modelToDTO(articleService.getArticleById(articleId));
+                request.setAttribute("article", article);
+                request.getRequestDispatcher("/WEB-INF/jsp/article/article_page.jsp").forward(request, response);
             } catch (SQLException e) {
                 System.out.println("Failed to fetch article: " + e.getMessage());
             }
-        } else {
-            // Default action: fetch all articles
+        } else if ("/management".equals(path)) {
+            // Display articles in a table format
             try {
-                List<ArticleDTO> articles = articleService.getAllArticles(); // Fetch articles
-                request.setAttribute("articles", articles); // Set articles as request attribute
-                request.getRequestDispatcher("/WEB-INF/jsp/article/article_main.jsp").forward(request, response); // Forward to main JSP
+                List<ArticleDTO> articles = articleService.getAllArticles();
+                request.setAttribute("articles", articles);
+                request.getRequestDispatcher("/WEB-INF/jsp/article/article_management.jsp").forward(request, response);
+            } catch (SQLException e) {
+                System.out.println("Failed to fetch articles: " + e.getMessage());
+            }
+        } else {
+            // Default action: fetch all articles for the main page
+            try {
+                List<ArticleDTO> articles = articleService.getAllArticles();
+                request.setAttribute("articles", articles);
+                request.getRequestDispatcher("/WEB-INF/jsp/article/article_main.jsp").forward(request, response);
             } catch (SQLException e) {
                 System.out.println("Failed to fetch articles: " + e.getMessage());
             }
         }
     }
+
+
 
 }

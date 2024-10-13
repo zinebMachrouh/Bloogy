@@ -15,6 +15,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://kit.fontawesome.com/6e1faf1eda.js" crossorigin="anonymous"></script>
     <style>
+        body{
+            background-color: #FAFAFA;
+        }
         .comments{
             .comment{
                 padding: 10px 0;

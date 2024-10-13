@@ -5,7 +5,6 @@ import models.enums.ArticleStatus;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 
@@ -47,10 +46,6 @@ public class Article {
     @ManyToOne
     @JoinColumn(name = "author_id", nullable = false)
     private User user;
-
-
-    @OneToMany(mappedBy = "article", fetch = FetchType.EAGER, cascade = CascadeType.ALL) 
-    private List<Comment> comments;
 
 
     public Article() {
@@ -142,7 +137,5 @@ public class Article {
         this.user = user;
     }
 
-    public List<Comment> getComments(){
-        return comments;
-    }
+
 }

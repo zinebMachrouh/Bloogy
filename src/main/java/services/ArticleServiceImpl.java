@@ -35,7 +35,8 @@ public class ArticleServiceImpl implements ArticleService {
                 articleDTO.getCreatedAt(),
                 articleDTO.getLunchedAt(),
                 articleDTO.getStatus(),
-                articleDTO.getCategory().dtoToModel()
+                articleDTO.getCategory().dtoToModel(),
+                articleDTO.getUser().dtoToModel()
         );
         return articleDAO.addArticle(article);
     }
@@ -53,7 +54,9 @@ public class ArticleServiceImpl implements ArticleService {
                     articleDTO.getCreatedAt(),
                     articleDTO.getLunchedAt(),
                     articleDTO.getStatus(),
-                    articleDTO.getCategory().dtoToModel()
+                    articleDTO.getCategory().dtoToModel(),
+                    articleDTO.getUser().dtoToModel()
+
             );
             return articleDAO.updateArticle(article);
         }

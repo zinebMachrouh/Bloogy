@@ -71,6 +71,8 @@
     </servlet-mapping>
 
 
+    <!-- Article controller -->
+
     <servlet>
         <servlet-name>ArticleController</servlet-name>
         <servlet-class>controllers.ArticleController</servlet-class>
@@ -78,13 +80,9 @@
 
     <servlet-mapping>
         <servlet-name>ArticleController</servlet-name>
-        <url-pattern>/articles</url-pattern>
+        <url-pattern>/article/*</url-pattern>
     </servlet-mapping>
 
-    <servlet-mapping>
-        <servlet-name>ArticleController</servlet-name>
-        <url-pattern>/article</url-pattern>
-    </servlet-mapping>
 
 
 
